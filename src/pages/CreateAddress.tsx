@@ -15,6 +15,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { useAuthStore } from "@/store/authStore";
 
 type AddressForm = {
   address_line_1: string;
@@ -25,8 +26,10 @@ type AddressForm = {
   pincode: string;
 };
 
-const CreateAddress = () => {
+const CreateAddress = ({role}: {role: "DOCTOR" | "PATIENT"}) => {
+
   const navigate = useNavigate();
+  const setRole = useAuthStore((state) => state.setRole);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<AddressForm>({
@@ -41,16 +44,29 @@ const CreateAddress = () => {
   });
 
   const onSubmit = async (data: AddressForm) => {
+    console.log("SUBMIT TRIGGERED", role);  
     try {
       setLoading(true);
 
-      const res = await axiosInstance.post("/address", data);
+      await axiosInstance.post("/address", data);
 
-      console.log("ADDRESS CREATED:", res.data);
+      let res;
 
-      // 🔥 FINAL STEP DONE → DASHBOARD
-      navigate("/login");
+      if(role === "DOCTOR"){
+        res = await axiosInstance.get('/doctors/my-profile');
+      }else{
+        res = await axiosInstance.get('/patients/my-profile')
+      }
 
+      const updatedRole = res.data.data.role;
+
+      setRole(updatedRole);
+
+      if (updatedRole === "DOCTOR") {
+        navigate("/doctor");
+      } else {
+        navigate("/patient");
+      }
     } catch (error: any) {
       console.log("ERROR:", error.response?.data || error.message);
     } finally {
@@ -63,9 +79,8 @@ const CreateAddress = () => {
       <h2 className="text-xl font-semibold">Add Address</h2>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.log("VALIDATION ERROR: ", errors))} className="space-y-4">
 
-          {/* ADDRESS LINE 1 */}
           <FormField
             control={form.control}
             name="address_line_1"
@@ -81,7 +96,6 @@ const CreateAddress = () => {
             )}
           />
 
-          {/* ADDRESS LINE 2 */}
           <FormField
             control={form.control}
             name="address_line_2"
@@ -96,7 +110,6 @@ const CreateAddress = () => {
             )}
           />
 
-          {/* CITY */}
           <FormField
             control={form.control}
             name="city"
@@ -112,7 +125,6 @@ const CreateAddress = () => {
             )}
           />
 
-          {/* STATE */}
           <FormField
             control={form.control}
             name="state"
@@ -128,7 +140,6 @@ const CreateAddress = () => {
             )}
           />
 
-          {/* COUNTRY */}
           <FormField
             control={form.control}
             name="country"
@@ -144,7 +155,6 @@ const CreateAddress = () => {
             )}
           />
 
-          {/* PINCODE */}
           <FormField
             control={form.control}
             name="pincode"

@@ -10,7 +10,7 @@ const SelectRole = () => {
       <h2>Select your Role</h2>
 
       <button onClick={() => navigate('/patient-onboarding')}>Countinue as Patient</button>
-      <button onClick={() => navigate('/create-doctor')}>Countinue as Doctor</button>
+      <button onClick={() => navigate('/doctor-onboarding')}>Countinue as Doctor</button>
     </div>
   )
 }

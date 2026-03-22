@@ -8,6 +8,7 @@ import { useAuthStore } from '../store/authStore';
 import RegisterFlow from '../pages/auth/register/RegisterFlow';
 import SelectRole from '../pages/auth/SelectRole';
 import PatientOnboardiing from '../pages/patients/PatientOnboardiing';
+import DoctorOnboarding from '@/pages/doctors/DoctorOnboarding';
 
 const renderRoutes = (
    routes: RouteType[], 
@@ -49,6 +50,8 @@ const AppRoute = () => {
             <Route path="/register" element={<RegisterFlow />}/>
             <Route path="/select-role" element={<SelectRole/>}/>
             <Route path="/patient-onboarding" element={<PatientOnboardiing />}/>
+            <Route path='/doctor-onboarding' element={<DoctorOnboarding />} />
+
 
             {renderRoutes(protectedRoute, isAuthorized, role)}
 

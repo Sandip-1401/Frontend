@@ -26,10 +26,16 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest: any = error.config;
 
-    if (error.response?.status !== 401) {
+    const isAuthRoute = originalRequest.url?.includes("/auth/");
+
+    if (isAuthRoute) {
       return Promise.reject(error);
     }
 
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
+        
     if (originalRequest._retry) {
       return Promise.reject(error);
     }
@@ -39,8 +45,9 @@ axiosInstance.interceptors.response.use(
     try {
       const refreshToken = localStorage.getItem("refreshToken");
 
+      //don not throw customr error
       if (!refreshToken) {
-        throw new Error("No refresh token");
+        return Promise.reject(error);
       }
 
       const res = await axios.post(
@@ -58,7 +65,6 @@ axiosInstance.interceptors.response.use(
 
     } catch (err) {
       localStorage.clear();
-      // window.location.href = "/login";
       return Promise.reject(err);
     }
   }

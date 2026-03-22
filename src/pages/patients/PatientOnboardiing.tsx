@@ -10,7 +10,7 @@ const PatientOnboardiing = () => {
   return (
     <>
       {step === 1 && <CreatePatient />}
-      {step === 2 && <CreateAddress />}
+      {step === 2 && <CreateAddress role={'PATIENT'} />}
     </>
   )
 }

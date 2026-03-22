@@ -7,6 +7,8 @@ interface AuthState {
 
    setAuth: (accessToken: string, refreshToken: string, role: Role) => void,
    logout: () => void
+
+   setRole: (role: Role) => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -33,7 +35,11 @@ export const useAuthStore = create<AuthState>((set) => ({
          accessToken: null,
          role: null
       })
-   }
+   },
+
+   setRole: (role: Role) => set({
+      role
+   })
 }))
 
 

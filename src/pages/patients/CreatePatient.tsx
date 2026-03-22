@@ -4,8 +4,9 @@ import { usePatientOnboardingStore } from "../../store/patientOnboardingStore";
 import { useState } from "react";
 
 // shadcn
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -14,7 +15,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 
 type PatientForm = {
   blood_group: string;
@@ -28,18 +36,25 @@ const CreatePatient = () => {
   const setStep = usePatientOnboardingStore((s) => s.setStep);
   const [loading, setLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<PatientForm>();
+  const form = useForm<PatientForm>({
+    defaultValues: {
+      blood_group: "",
+      date_of_birth: "",
+      gender: undefined,
+      height: 0,
+      weight: 0,
+    },
+  });
 
   const onSubmit = async (data: PatientForm) => {
     try {
       setLoading(true);
 
-      const res = await axiosInstance.post("/patients", data);
+      const payload = {
+         ...data, date_of_birth: new Date(data.date_of_birth),
+      }
+
+      const res = await axiosInstance.post("/patients", payload);
       console.log("PATIENT CREATED:", res.data);
 
       setStep(2);
@@ -54,105 +69,133 @@ const CreatePatient = () => {
     <div className="max-w-md mx-auto space-y-6">
       <h2 className="text-xl font-semibold">Create Patient Profile</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-        {/* BLOOD GROUP */}
-        <Field>
-          <FieldLabel>Blood Group</FieldLabel>
-
-          <Select onValueChange={(val) => setValue("blood_group", val)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select Blood Group" />
-            </SelectTrigger>
-            <SelectContent>
-              {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((bg) => (
-                <SelectItem key={bg} value={bg}>
-                  {bg}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          {errors.blood_group && (
-            <FieldError>{errors.blood_group.message}</FieldError>
-          )}
-        </Field>
-
-        {/* DOB */}
-        <Field>
-          <FieldLabel>Date of Birth</FieldLabel>
-          <Input
-            type="date"
-            {...register("date_of_birth", {
-              required: "Date of birth is required",
-            })}
+          {/* BLOOD GROUP */}
+          <FormField
+            control={form.control}
+            name="blood_group"
+            rules={{ required: "Blood group is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Blood Group</FormLabel>
+                <Select onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Blood Group" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map(
+                      (bg) => (
+                        <SelectItem key={bg} value={bg}>
+                          {bg}
+                        </SelectItem>
+                      )
+                    )}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.date_of_birth && (
-            <FieldError>{errors.date_of_birth.message}</FieldError>
-          )}
-        </Field>
 
-        {/* GENDER */}
-        <Field>
-          <FieldLabel>Gender</FieldLabel>
+          {/* DOB */}
+          <FormField
+            control={form.control}
+            name="date_of_birth"
+            rules={{ required: "Date of birth is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Date of Birth</FormLabel>
+                <FormControl>
+                  <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <Select onValueChange={(val) => setValue("gender", val as any)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select Gender" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="MALE">Male</SelectItem>
-              <SelectItem value="FEMALE">Female</SelectItem>
-              <SelectItem value="OTHER">Other</SelectItem>
-            </SelectContent>
-          </Select>
+          {/* GENDER */}
+          <FormField
+            control={form.control}
+            name="gender"
+            rules={{ required: "Gender is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <Select onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Gender" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="MALE">Male</SelectItem>
+                    <SelectItem value="FEMALE">Female</SelectItem>
+                    <SelectItem value="OTHER">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          {errors.gender && (
-            <FieldError>{errors.gender.message}</FieldError>
-          )}
-        </Field>
-
-        {/* HEIGHT */}
-        <Field>
-          <FieldLabel>Height (cm)</FieldLabel>
-          <Input
-            type="number"
-            placeholder="Enter height"
-            {...register("height", {
+          {/* HEIGHT */}
+          <FormField
+            control={form.control}
+            name="height"
+            rules={{
               required: "Height is required",
-              valueAsNumber: true,
               min: { value: 50, message: "Too small" },
               max: { value: 300, message: "Too large" },
-            })}
+            }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Height (cm)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.height && (
-            <FieldError>{errors.height.message}</FieldError>
-          )}
-        </Field>
 
-        {/* WEIGHT */}
-        <Field>
-          <FieldLabel>Weight (kg)</FieldLabel>
-          <Input
-            type="number"
-            placeholder="Enter weight"
-            {...register("weight", {
+          {/* WEIGHT */}
+          <FormField
+            control={form.control}
+            name="weight"
+            rules={{
               required: "Weight is required",
-              valueAsNumber: true,
               min: { value: 2, message: "Too small" },
               max: { value: 500, message: "Too large" },
-            })}
+            }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Weight (kg)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.weight && (
-            <FieldError>{errors.weight.message}</FieldError>
-          )}
-        </Field>
 
-        {/* SUBMIT */}
-        <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "Creating..." : "Next"}
-        </Button>
-      </form>
+          <Button type="submit" disabled={loading} className="w-full">
+            {loading ? "Creating..." : "Next"}
+          </Button>
+
+        </form>
+      </Form>
     </div>
   );
 };

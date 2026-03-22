@@ -12,7 +12,7 @@ import PatientOnboardiing from '../pages/patients/PatientOnboardiing';
 const renderRoutes = (
    routes: RouteType[], 
    isAuthorized: boolean, 
-   role: Role
+   role: Role | null
 ) => {
    return routes.map((route) => (
       <Route

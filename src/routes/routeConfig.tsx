@@ -2,7 +2,6 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import PatientDashboard from "../pages/patients/PatientDashboard";
 import DoctorDashboard from "../pages/doctors/DoctorDashboard";
 import AdminLayout from "../pages/admin/AdminLayout";
-import CreatePatient from "../pages/patients/CreatePatient";
 
 export interface RouteType{
    path: string,

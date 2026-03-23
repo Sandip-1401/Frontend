@@ -170,7 +170,7 @@ const Login = () => {
             <p className="text-center text-xs text-slate-400 mt-6">
               Don't have an account?{" "}
               <span
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/register")}
                 className="text-blue-500 font-semibold hover:underline cursor-pointer"
               >
                 Sign up

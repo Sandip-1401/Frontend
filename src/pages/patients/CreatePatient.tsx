@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { axiosInstance } from "../../api/axios";
 import { usePatientOnboardingStore } from "../../store/patientOnboardingStore";
 import { useState } from "react";
+import { ClipboardList, ArrowRight } from "lucide-react";
 
-// shadcn
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 
 import {
   Select,
@@ -14,15 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
+import { createPatient } from "@/features/general/api";
 
 type PatientForm = {
   blood_group: string;
@@ -32,11 +24,46 @@ type PatientForm = {
   weight: number;
 };
 
+const inputCls = (hasError: boolean) =>
+  `h-11 rounded-xl border text-sm transition-all placeholder:text-slate-400
+  ${hasError
+    ? "border-red-300 bg-red-50/40 focus-visible:ring-red-100"
+    : "border-slate-200 bg-slate-50 hover:border-slate-300 focus:bg-white focus-visible:ring-blue-100 focus-visible:border-blue-400"
+  }`;
+
+const triggerCls = (hasError: boolean) =>
+  `h-11 rounded-xl border text-sm transition-all
+  ${hasError
+    ? "border-red-300 bg-red-50/40"
+    : "border-slate-200 bg-slate-50 hover:border-slate-300"
+  }`;
+
+const dropdownStyle: React.CSSProperties = {
+  backgroundColor: "#ffffff",
+  border: "1px solid #e2e8f0",
+  borderRadius: "0.75rem",
+  boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
+  zIndex: 50,
+};
+
+const FieldError = ({ message }: { message?: string }) =>
+  message ? (
+    <p className="text-xs text-red-500 flex items-center gap-1 mt-1">
+      <span>⚠</span> {message}
+    </p>
+  ) : null;
+
 const CreatePatient = () => {
   const setStep = usePatientOnboardingStore((s) => s.setStep);
   const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  const form = useForm<PatientForm>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<PatientForm>({
     defaultValues: {
       blood_group: "",
       date_of_birth: "",
@@ -47,155 +74,160 @@ const CreatePatient = () => {
   });
 
   const onSubmit = async (data: PatientForm) => {
-    try {
       setLoading(true);
+      setServerError(null);
 
       const payload = {
-         ...data, date_of_birth: new Date(data.date_of_birth),
+        ...data,
+        date_of_birth: new Date(data.date_of_birth),
+      };
+
+      const res = await createPatient(payload);
+
+      if(!res.success){
+        setServerError(res.message)
+        setLoading(false);
+        return;
       }
-
-      const res = await axiosInstance.post("/patients", payload);
       console.log("PATIENT CREATED:", res.data);
-
       setStep(2);
-    } catch (error: any) {
-      console.log("ERROR:", error.response?.data || error.message);
-    } finally {
       setLoading(false);
-    }
   };
 
   return (
-    <div className="max-w-md mx-auto space-y-6">
-      <h2 className="text-xl font-semibold">Create Patient Profile</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 p-4">
+      <Card className="w-full max-w-lg shadow-2xl rounded-3xl overflow-hidden border border-slate-200/60">
+        <CardContent className="p-0">
+          <div className="bg-white p-8 sm:p-10">
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-12 h-12 shrink-0 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                <ClipboardList className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-slate-800">Patient Profile</h1>
+                <p className="text-slate-400 text-sm mt-0.5">Fill in your health details to get started.</p>
+              </div>
+            </div>
 
-          {/* BLOOD GROUP */}
-          <FormField
-            control={form.control}
-            name="blood_group"
-            rules={{ required: "Blood group is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Blood Group</FormLabel>
-                <Select onValueChange={field.onChange}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Blood Group" />
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+              <div className="grid grid-cols-2 gap-4">
+
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">Blood Group</label>
+                  <Select onValueChange={(val) => setValue("blood_group", val, { shouldValidate: true })}>
+                    <SelectTrigger className={triggerCls(!!errors.blood_group)}>
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map(
-                      (bg) => (
-                        <SelectItem key={bg} value={bg}>
-                          {bg}
-                        </SelectItem>
-                      )
-                    )}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    <SelectContent style={dropdownStyle}>
+                      {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((bg) => (
+                        <SelectItem key={bg} value={bg}>{bg}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <input
+                    type="hidden"
+                    {...register("blood_group", { required: "Blood group is required" })}
+                  />
+                  <FieldError message={errors.blood_group?.message} />
+                </div>
 
-          {/* DOB */}
-          <FormField
-            control={form.control}
-            name="date_of_birth"
-            rules={{ required: "Date of birth is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Date of Birth</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* GENDER */}
-          <FormField
-            control={form.control}
-            name="gender"
-            rules={{ required: "Gender is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Gender</FormLabel>
-                <Select onValueChange={field.onChange}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Gender" />
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">Gender</label>
+                  <Select onValueChange={(val) => setValue("gender", val as PatientForm["gender"], { shouldValidate: true })}>
+                    <SelectTrigger className={triggerCls(!!errors.gender)}>
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="MALE">Male</SelectItem>
-                    <SelectItem value="FEMALE">Female</SelectItem>
-                    <SelectItem value="OTHER">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    <SelectContent style={dropdownStyle}>
+                      <SelectItem value="MALE">Male</SelectItem>
+                      <SelectItem value="FEMALE">Female</SelectItem>
+                      <SelectItem value="OTHER">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <input
+                    type="hidden"
+                    {...register("gender", { required: "Gender is required" })}
+                  />
+                  <FieldError message={errors.gender?.message} />
+                </div>
+              </div>
 
-          {/* HEIGHT */}
-          <FormField
-            control={form.control}
-            name="height"
-            rules={{
-              required: "Height is required",
-              min: { value: 50, message: "Too small" },
-              max: { value: 300, message: "Too large" },
-            }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Height (cm)</FormLabel>
-                <FormControl>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-slate-700">Date of Birth</label>
+                <Input
+                  type="date"
+                  className={inputCls(!!errors.date_of_birth)}
+                  {...register("date_of_birth", { required: "Date of birth is required" })}
+                />
+                <FieldError message={errors.date_of_birth?.message} />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">Height (cm)</label>
                   <Input
                     type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    placeholder="170"
+                    className={inputCls(!!errors.height)}
+                    {...register("height", {
+                      required: "Height is required",
+                      min: { value: 50, message: "Too small" },
+                      max: { value: 300, message: "Too large" },
+                      valueAsNumber: true,
+                    })}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FieldError message={errors.height?.message} />
+                </div>
 
-          {/* WEIGHT */}
-          <FormField
-            control={form.control}
-            name="weight"
-            rules={{
-              required: "Weight is required",
-              min: { value: 2, message: "Too small" },
-              max: { value: 500, message: "Too large" },
-            }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Weight (kg)</FormLabel>
-                <FormControl>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">Weight (kg)</label>
                   <Input
                     type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    placeholder="65"
+                    className={inputCls(!!errors.weight)}
+                    {...register("weight", {
+                      required: "Weight is required",
+                      min: { value: 2, message: "Too small" },
+                      max: { value: 500, message: "Too large" },
+                      valueAsNumber: true,
+                    })}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FieldError message={errors.weight?.message} />
+                </div>
+              </div>
 
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? "Creating..." : "Next"}
-          </Button>
+              {serverError && (
+                <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
+                  <span>⚠</span> {serverError}
+                </div>
+              )}
 
-        </form>
-      </Form>
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold text-sm shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
+                >
+                  {loading ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Creating...
+                    </>
+                  ) : (
+                    <>Next <ArrowRight className="w-4 h-4" /></>
+                  )}
+                </Button>
+              </div>
+
+            </form>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

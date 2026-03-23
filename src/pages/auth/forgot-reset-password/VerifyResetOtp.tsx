@@ -81,7 +81,6 @@ const VerifyResetOtp = () => {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-              {/* OTP Input */}
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700">OTP Code</label>
                 <div className="relative">
@@ -106,7 +105,6 @@ const VerifyResetOtp = () => {
                 )}
               </div>
 
-              {/* Server Error */}
               {serverError && (
                 <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
                   <span>⚠</span> {serverError}
@@ -120,7 +118,6 @@ const VerifyResetOtp = () => {
                 </div>
               )} */}
 
-              {/* Submit */}
               <div className="pt-1">
                 <Button
                   type="submit"

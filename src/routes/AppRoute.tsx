@@ -9,6 +9,9 @@ import RegisterFlow from '../pages/auth/register/RegisterFlow';
 import SelectRole from '../pages/auth/SelectRole';
 import PatientOnboardiing from '../pages/patients/PatientOnboardiing';
 import DoctorOnboarding from '@/pages/doctors/DoctorOnboarding';
+import ForgotPassword from '@/pages/auth/forgot-reset-password/ForgotPassword';
+import VerifyResetOtp from '@/pages/auth/forgot-reset-password/VerifyResetOtp';
+import ResetPassword from '@/pages/auth/forgot-reset-password/ReserPassword';
 
 const renderRoutes = (
    routes: RouteType[], 
@@ -51,8 +54,9 @@ const AppRoute = () => {
             <Route path="/select-role" element={<SelectRole/>}/>
             <Route path="/patient-onboarding" element={<PatientOnboardiing />}/>
             <Route path='/doctor-onboarding' element={<DoctorOnboarding />} />
-
-
+            <Route path='/forgot-password' element={<ForgotPassword />}/>
+            <Route path='/verify-reset-otp' element={<VerifyResetOtp />}/>
+            <Route path='/reset-password' element={<ResetPassword />}/>
             {renderRoutes(protectedRoute, isAuthorized, role)}
 
          </Routes>

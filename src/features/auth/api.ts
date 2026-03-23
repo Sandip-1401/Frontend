@@ -24,3 +24,31 @@ export const registerUser = (data: {
   handleApi<null>(() =>
     axiosInstance.post("/auth/register", data)
   );
+
+
+export const forgotPassward = (data: {email: string}) => 
+  handleApi<null>(() => 
+    axiosInstance.post('/auth/forgot-password', data)
+  );
+
+export const verifyResetPasswordOtp = (data: {
+  email: string,
+  otp: string
+}) => 
+  handleApi(() => 
+    axiosInstance.post('/auth/verify-reset-password-otp', data)
+  )
+
+export const resetPassword = (data: {
+  email: string,
+  password: string,
+  confirmPassword: string
+}) => 
+  handleApi(() => 
+    axiosInstance.post('/auth/reset-password', data)
+  )
+
+export const resendOtp = (data: {email: string}) => 
+  handleApi<null>(() => 
+    axiosInstance.post('/auth/resend-otp', data)
+  )

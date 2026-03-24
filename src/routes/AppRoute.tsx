@@ -12,6 +12,7 @@ import DoctorOnboarding from '@/pages/doctors/DoctorOnboarding';
 import ForgotPassword from '@/pages/auth/forgot-reset-password/ForgotPassword';
 import VerifyResetOtp from '@/pages/auth/forgot-reset-password/VerifyResetOtp';
 import ResetPassword from '@/pages/auth/forgot-reset-password/ReserPassword';
+import AppLayout from '@/components/layout/AppLayout';
 
 const renderRoutes = (
    routes: RouteType[], 
@@ -57,8 +58,10 @@ const AppRoute = () => {
             <Route path='/forgot-password' element={<ForgotPassword />}/>
             <Route path='/verify-reset-otp' element={<VerifyResetOtp />}/>
             <Route path='/reset-password' element={<ResetPassword />}/>
-            {renderRoutes(protectedRoute, isAuthorized, role)}
 
+            <Route element={<AppLayout />} >
+               {renderRoutes(protectedRoute, isAuthorized, role)}
+            </Route>
          </Routes>
       </BrowserRouter>
    )

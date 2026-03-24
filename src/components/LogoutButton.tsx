@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useAuthStore } from "../store/authStore";
+import { Button } from "./ui/button";
+import { LogOutIcon } from "lucide-react";
 
 const LogoutButton = () => {
 
@@ -13,7 +15,8 @@ const LogoutButton = () => {
 
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
+      
+      <Button className="bg-red-400 hover:bg-red-500" onClick={handleLogout}> <LogOutIcon />Logout</Button>
     </div>
   )
 }

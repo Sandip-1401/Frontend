@@ -36,7 +36,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="h-full flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
+      <div className="h-full flex flex-col bg-sidebar text-sidebar-foreground border-r border-gray-300 shadow-lg">
         
         <ScrollArea className="flex-1 py-3 px-2">
           <nav className="space-y-1">
@@ -80,9 +80,10 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                     {isOpen && !collapsed && (
                       <div className="ml-6 mt-1 space-y-1">
                         {item.children.map((child, idx) => {
-                          const isActive = location.pathname.startsWith(
-                            String(child.path)
-                          );
+                          // const isActive = location.pathname.startsWith(
+                          //   String(child.path)
+                          // );
+                          const isActive = location.pathname === String(item.path);
 
                           return (
                             <Link
@@ -91,7 +92,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                               className={cn(
                                 "block rounded-md px-3 py-1.5 text-sm transition",
                                 isActive
-                                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                                  ? "bg-primary text-sidebar-accent-foreground"
                                   : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50"
                               )}
                             >
@@ -99,15 +100,16 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                             </Link>
                           );
                         })}
-                      </div>
+                      </div>  
                     )}
                   </div>
                 );
               }
 
-              const isActive = location.pathname.startsWith(
-                String(item.path)
-              );
+              // const isActive = location.pathname.startsWith(
+              //   String(item.path)
+              // );
+              const isActive = location.pathname === String(item.path);
 
               const linkContent = (
                 <Link
@@ -116,7 +118,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                     "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all duration-150",
                     collapsed && "justify-center px-0 py-2.5",
                     isActive
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                      ? "bg-primary text-sidebar-accent-foreground"
                       : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
                   )}
                 >

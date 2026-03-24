@@ -3,9 +3,29 @@
 @tailwind utilities;
 
 :root {
+  --primary: 187, 95%, 68%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 308, 99%, 63%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --sidebar-background: 0, 0%, 100%;
+  --sidebar-foreground: 0, 0%, 8%;
+}
+.dark {
+  --primary: 220 90% 60%;
+  --primary-foreground: 0 0% 100%;
+
+  --sidebar-background: 240 10% 15%;
+}
+:root {
   --border: 214 32% 91%;
   --input: 214 32% 91%;
   --ring: 215 20% 65%;
   --background: 0 0% 100%;
   --foreground: 222 47% 11%;
+}
+
+.man{
+  background-color: hsl(187, 95%, 68%);
 }

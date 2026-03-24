@@ -66,7 +66,7 @@ const Login = () => {
               <p className="text-slate-400 text-sm mt-1.5">Sign in to continue to your dashboard.</p>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="on" className="space-y-5">
 
               <div className="space-y-1.5">
                 <Label htmlFor="email" className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -77,6 +77,7 @@ const Login = () => {
                   <Input
                     id="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="you@example.com"
                     className={`pl-10 h-11 rounded-xl border text-sm transition-all
                       ${errors.email
@@ -116,6 +117,7 @@ const Login = () => {
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
                   <Input
                     id="password"
+                    autoComplete="current-password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className={`pl-10 pr-11 h-11 rounded-xl border text-sm transition-all

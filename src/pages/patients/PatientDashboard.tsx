@@ -2,10 +2,8 @@ import LogoutButton from "../../components/LogoutButton"
 
 const PatientDashboard = () => {
   return (
-    <div>
+    <div >
       <h3>PatientDashboard</h3>
-      
-      <LogoutButton />
     </div>
   )
 }

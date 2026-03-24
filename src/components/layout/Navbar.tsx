@@ -1,6 +1,7 @@
 import { Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import LogoutButton from "../LogoutButton";
 
 type NavbarProps = {
   onToggle: () => void;
@@ -23,6 +24,7 @@ const Navbar = ({ onToggle }: NavbarProps) => {
             <Menu className="h-5 w-5" />
           </Button>
         </div>
+        <LogoutButton />
       </div>
     </>
   );

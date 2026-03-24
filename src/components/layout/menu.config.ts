@@ -18,7 +18,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
   ADMIN: [
     {
       label: "Dashboard",
-      path: "/admin/dashboard",
+      path: "/admin",
       icon: LayoutDashboard,
     },
     {
@@ -45,7 +45,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
   DOCTOR: [
     {
       label: "Dashboard",
-      path: "/doctor/dashboard",
+      path: "/doctor",
       icon: LayoutDashboard,
     },
     {
@@ -58,7 +58,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
   PATIENT: [
     {
       label: "Dashboard",
-      path: "/patient/dashboard",
+      path: "/patient",
       icon: LayoutDashboard,
     },
     {

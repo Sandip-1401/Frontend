@@ -3,6 +3,9 @@ import {
   User,
   Stethoscope,
   Users,
+  DotIcon,
+  LucidePlugZap,
+  Dock,
 } from "lucide-react";
 
 export type Role = "ADMIN" | "DOCTOR" | "PATIENT";
@@ -66,5 +69,10 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       path: "/patient/profile",
       icon: User,
     },
+    {
+      label: "All Doctors",
+      path: "/patient/all-doctors",
+      icon: Dock
+    }
   ],
 };

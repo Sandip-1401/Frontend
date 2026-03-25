@@ -1,3 +1,12 @@
+export type PatientData = null;
+
+export type DoctorData = null;
+
+export type Department = {
+  department_id: string;
+  department_name: string;
+};
+
 export type User = {
   user_id: string;
   name: string;
@@ -35,3 +44,13 @@ export type Patient = {
 export type PatientProfileResponse = {
   patient: Patient;
 };
+
+export interface DoctorDataType {
+  doctor_id: string,
+  qualification: string,
+  experience_years: number,
+  consultation_fee: number,
+  status: string,
+  user: User,
+  department: Department
+}

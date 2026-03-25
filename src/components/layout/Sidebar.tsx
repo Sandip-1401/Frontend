@@ -36,10 +36,10 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="h-full flex flex-col bg-sidebar text-sidebar-foreground border-r border-gray-300 shadow-lg">
+      <div className="h-full flex flex-col text-foreground border-r border-border shadow-sm dark:bg-slate-950 dark:border-gray-600 p-1.5">
         
         <ScrollArea className="flex-1 py-3 px-2">
-          <nav className="space-y-1">
+          <nav className="space-y-1.5">
             {menuItems.map((item, i) => {
               const Icon = item.icon;
 
@@ -52,13 +52,13 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                     <button
                       onClick={() => toggleMenu(item.label)}
                       className={cn(
-                        "w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition ",
+                        "w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
                         collapsed && "justify-center px-0 py-2.5",
-                        "hover:bg-sidebar-accent/50"
+                        "text-muted-foreground hover:text-foreground "
                       )}
                     >
                       {Icon && (
-                        <Icon className="h-4 w-4 shrink-0 text-sidebar-foreground/70" />
+                        <Icon className="h-4 w-4 shrink-0" />
                       )}
 
                       {!collapsed && (
@@ -68,7 +68,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                           </span>
                           <ChevronRight
                             className={cn(
-                              "h-4 w-4 transition-transform",
+                              "h-4 w-4 transition-transform duration-200 opacity-50",
                               isOpen && "rotate-90"
                             )}
                           />
@@ -78,11 +78,8 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
 
                     {/* Children */}
                     {isOpen && !collapsed && (
-                      <div className="ml-6 mt-1 space-y-1">
+                      <div className="ml-4 mt-0.5 mb-0.5 space-y-0.5 border-l border-border pl-3">
                         {item.children.map((child, idx) => {
-                          // const isActive = location.pathname.startsWith(
-                          //   String(child.path)
-                          // );
                           const isActive = location.pathname === String(item.path);
 
                           return (
@@ -90,10 +87,10 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                               key={idx}
                               to={String(child.path)}
                               className={cn(
-                                "block rounded-md px-3 py-1.5 text-sm transition",
+                                "block rounded-md px-3 py-1.5 text-sm transition-all duration-150",
                                 isActive
-                                  ? "bg-primary text-sidebar-accent-foreground"
-                                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50"
+                                  ? "bg-primary text-primary-foreground font-medium"
+                                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
                               )}
                             >
                               {child.label}
@@ -106,37 +103,34 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                 );
               }
 
-              // const isActive = location.pathname.startsWith(
-              //   String(item.path)
-              // );
               const isActive = location.pathname === String(item.path);
 
               const linkContent = (
                 <Link
                   to={String(item.path)}
                   className={cn(
-                    "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all duration-150",
+                    "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 hover:bg-cyan-100 dark:hover:bg-slate-700",
                     collapsed && "justify-center px-0 py-2.5",
                     isActive
-                      ? "bg-primary text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                      ? "bg-primary hover:bg-primary dark:hover:bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground "
                   )}
                 >
                   {Icon && (
                     <Icon
                       className={cn(
-                        "shrink-0",
+                        "shrink-0 transition-colors dark:text-gray-200",
                         collapsed ? "h-5 w-5" : "h-4 w-4",
                         isActive
-                          ? "text-sidebar-accent-foreground"
-                          : "text-sidebar-foreground/50 group-hover:text-sidebar-foreground"
+                          ? "text-primary-foreground"
+                          : "group-hover:text-foreground"
                       )}
                     />
                   )}
 
                   {!collapsed && (
                     <>
-                      <span className="flex-1 truncate">
+                      <span className="flex-1 truncate dark:text-gray-200">
                         {item.label}
                       </span>
                       {isActive && (
@@ -165,5 +159,4 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
     </TooltipProvider>
   );
 };
-
 export default Sidebar;

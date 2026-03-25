@@ -49,6 +49,7 @@ const AppRoute = () => {
    return (
       <BrowserRouter>
          <Routes>
+            <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/register" element={<RegisterFlow />}/>
@@ -58,7 +59,7 @@ const AppRoute = () => {
             <Route path='/forgot-password' element={<ForgotPassword />}/>
             <Route path='/verify-reset-otp' element={<VerifyResetOtp />}/>
             <Route path='/reset-password' element={<ResetPassword />}/>
-
+          
             <Route element={<AppLayout />} >
                {renderRoutes(protectedRoute, isAuthorized, role)}
             </Route>

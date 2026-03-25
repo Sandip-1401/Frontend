@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
+import type { PatientProfileResponse } from "@/types/patientApiResponse";
 
 type PatientData = null;
 type DoctorData = null;
@@ -31,4 +32,9 @@ export const getDepartments = async () => {
       data: res.data.data as Department[]
    }
 }
+
+export const getMyProfile =  () => 
+   handleApi<PatientProfileResponse>(() => 
+      axiosInstance.get('/patients/my-profile')
+   )
    

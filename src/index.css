@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --primary: 187, 95%, 68%;
+  --primary: 187, 95%, 45%;
   --primary-foreground: 0 0% 100%;
   
   --secondary: 308, 99%, 63%;
   --secondary-foreground: 0 0% 100%;
   
-  --sidebar-background: 0, 0%, 100%;
-  --sidebar-foreground: 0, 0%, 8%;
+  /* --sidebar-background: 0, 0%, 100%;
+  --sidebar-foreground: 0, 0%, 8%; */
 }
 .dark {
-  --primary: 220 90% 60%;
+  --primary: 187, 95%, 45%;
   --primary-foreground: 0 0% 100%;
 
-  --sidebar-background: 240 10% 15%;
+  /* --sidebar-background: 240 10% 15%; */
 }
 :root {
   --border: 214 32% 91%;
@@ -26,6 +26,10 @@
   --foreground: 222 47% 11%;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
 .man{
-  background-color: hsl(187, 95%, 68%);
+  background-color: hsl(187, 70%, 61%);
 }

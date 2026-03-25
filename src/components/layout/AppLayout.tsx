@@ -31,7 +31,7 @@ const AppLayout = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-muted/40">
+    <div className="h-screen flex flex-col ">
 
       <header className="h-16 z-30 shrink-0">
         <Navbar onToggle={handleToggle} />
@@ -41,7 +41,7 @@ const AppLayout = () => {
 
         {isMobile && mobileOpen && (
           <div
-            className="fixed inset-0 z-20 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-20 bg-slate-950/50 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
         )}
@@ -62,7 +62,7 @@ const AppLayout = () => {
           <Sidebar collapsed={isMobile ? false : collapsed} />
         </aside>
 
-        <main className="flex-1 overflow-y-auto ">
+        <main className="flex-1 overflow-y-auto dark:bg-slate-950 dark:text-gray-200">
           <Outlet />
         </main>
       </div>

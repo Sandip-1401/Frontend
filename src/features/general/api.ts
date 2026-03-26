@@ -31,11 +31,11 @@ export const getMyProfile =  () =>
       axiosInstance.get('/patients/my-profile')
    )
    
-export const getAllDoctors = async (search: string, departmentId: string) => {
+export const getAllDoctors = async (search: string, departmentId: string, sort: string, order: string) => {
    const res = await handleApi<{
       pagination: any,
       data: DoctorDataType[]
-   }>(() => axiosInstance.get(`/doctors?department_id=${departmentId}&sort=${''}&order=${''}&search=${search}&page=${''}&limit=${''}`))
+   }>(() => axiosInstance.get(`/doctors?department_id=${departmentId}&sort=${sort}&order=${order}&search=${search}&page=${''}&limit=${''}`))
 
    if(!res.success) return res;
 

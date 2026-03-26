@@ -170,6 +170,7 @@ const ShowDoctors = () => {
                   <DoctorCard
                      key={idx}
                      name={doc.user.name}
+                     doctor_id={doc.doctor_id}
                      experience_year={doc.experience_years}
                      department={doc.department.department_name}
                      fees={doc.consultation_fee}

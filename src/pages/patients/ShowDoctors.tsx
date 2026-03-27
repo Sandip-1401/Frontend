@@ -10,7 +10,7 @@ import {
 import DoctorCard from "@/components/DoctorCard"
 import DynamicBreadcrumb from "@/components/DynamicBreadcrumb"
 import { getAllDoctors, getDepartments } from "@/features/general/api"
-import type { Department, DoctorDataType } from "@/types/apiResponse"
+import type { Department } from "@/types/apiResponse"
 import { useEffect, useState } from "react"
 import {
    InputGroup,
@@ -18,9 +18,13 @@ import {
    InputGroupInput,
 } from "@/components/ui/input-group"
 import { ArrowDownUp, ArrowUpDown, FilterIcon, FilterXIcon, Search, XOctagonIcon } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import MyLoader from "@/components/MyLoader"
+import ErrorMessage from "./ErrorMessage"
 
 // type Sort = "experience_years" | "consultation_fee" | null;
 // type Order = "ASC" | "DESC" | null;
@@ -31,7 +35,7 @@ const toggleGroupItem = "w-1/2 px-4 py-1.5 text-sm font-medium data-[state=on]:b
 
 const ShowDoctors = () => {
 
-   const [doctors, setDoctors] = useState<DoctorDataType[]>([]);
+   // const [doctors, setDoctors] = useState<DoctorDataType[]>([]);
    const [search, setSearch] = useState<string>('');
    const [debouncedSearch, setDebouncedSearch] = useState('');
    const [sort, setSort] = useState<string>('');
@@ -39,20 +43,33 @@ const ShowDoctors = () => {
    const [departments, setDepartments] = useState<Department[]>([]);
    const [departmentId, setDepartmentId] = useState<string>('');
 
-   useEffect(() => {
-      const fetchDoctors = async () => {
 
+   const { data, isLoading, error } = useQuery({
+      queryKey: ["doctors", debouncedSearch, departmentId, sort, order],
+      queryFn: async () => {
          const res = await getAllDoctors(debouncedSearch, departmentId, sort, order);
 
          if (!res.success) {
-            console.log("Doctor fetch message:", res.message);
-            return;
+            throw new Error(res.message);
          }
-         setDoctors(res.data);
-      };
+         return res.data;
+      }
+   })
 
-      fetchDoctors();
-   }, [debouncedSearch, sort, order, departmentId]);
+   // useEffect(() => {
+   //    const fetchDoctors = async () => {
+
+   //       const res = await getAllDoctors(debouncedSearch, departmentId, sort, order);
+
+   //       if (!res.success) {
+   //          console.log("Doctor fetch message:", res.message);
+   //          return;
+   //       }
+   //       setDoctors(res.data);
+   //    };
+
+   //    fetchDoctors();
+   // }, [debouncedSearch, sort, order, departmentId]);
 
    useEffect(() => {
       const fetchDepartments = async () => {
@@ -83,6 +100,7 @@ const ShowDoctors = () => {
       setDepartmentId('')
    }
 
+
    return (
       <div className="p-4">
          <DynamicBreadcrumb
@@ -94,6 +112,7 @@ const ShowDoctors = () => {
          <div>
             <h1 className="text-3xl font-bold text-primary ml-4">All Doctors</h1>
          </div>
+
          <div className="mt-4 px-10 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-3 mb-1">
             {/* <div className=" "> */}
             <div className="col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-4">
@@ -157,9 +176,14 @@ const ShowDoctors = () => {
                <Button onClick={handleClick} className="w-full text-sm font-semibold flex items-center justify-center gap-2 "><XOctagonIcon className="w-32 h-32" />Clear</Button>
             </div>
          </div>
+
          <div className="px-10 py-5 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-7 items-center justify-center">
 
-            {doctors.map((doc, idx) => (
+         {isLoading &&  (<MyLoader />)}
+
+         {error && (<ErrorMessage errorProp={error.message} />)}
+
+            {data?.map((doc, idx) => (
                <motion.div
                   key={doc.doctor_id}
                   layout

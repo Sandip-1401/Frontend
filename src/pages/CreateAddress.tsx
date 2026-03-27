@@ -68,9 +68,10 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
       }
 
       const updatedRole = res.data.data.role;
-      setRole(updatedRole);
+      console.log(updatedRole);
+      setRole(role);
 
-      if (updatedRole === "DOCTOR") {
+      if (role === "DOCTOR") {
         navigate("/doctor");
       } else {
         navigate("/patient");

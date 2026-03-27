@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { doctorOnboardingStor } from "@/store/doctorOnboarding";
-import { Stethoscope, ArrowRight } from "lucide-react";
+import { Stethoscope, ArrowRight, AlertTriangleIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createDoctor, getDepartments } from "@/features/general/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type DoctorForm = {
   qualification: string;
@@ -23,10 +24,10 @@ type DoctorForm = {
   department_id: string;
 };
 
-type Department = {
-  department_id: string;
-  department_name: string;
-};
+// type Department = {
+//   department_id: string;
+//   department_name: string;
+// };
 
 const inputCls = (hasError: boolean) =>
   `h-11 rounded-xl border text-sm transition-all placeholder:text-slate-400
@@ -53,16 +54,16 @@ const dropdownStyle: React.CSSProperties = {
 const FieldError = ({ message }: { message?: string }) =>
   message ? (
     <p className="text-xs text-red-500 flex items-center gap-1 mt-1">
-      <span>⚠</span> {message}
+      <span><AlertTriangleIcon /></span> {message}
     </p>
   ) : null;
 
 const CreateDoctor = () => {
   const setStep = doctorOnboardingStor((s) => s.setStep);
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [departments, setDepartments] = useState<Department[]>([]);
+  // const [departments, setDepartments] = useState<Department[]>([]);
 
   const { register, handleSubmit, setValue, formState: { errors } } =
     useForm<DoctorForm>({
@@ -74,35 +75,70 @@ const CreateDoctor = () => {
       },
     });
 
-  useEffect(() => {
-    const fetchDepartments = async () => {
+  // useEffect(() => {
+  //   const fetchDepartments = async () => {
 
+  //     const res = await getDepartments();
+
+  //     if (!res.success) {
+  //       console.log("Depart fetch message: ", res.message);
+  //       return;
+  //     }
+  //     setDepartments(res.data)
+  //   };
+  //   fetchDepartments();
+  // }, []);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["department"],
+    queryFn: async () => {
       const res = await getDepartments();
 
-      if(!res.success){
-        console.log("Depart fetch message: ", res.message);
-        return;
+      if (!res.success) {
+        throw new Error(res.message)
       }
-      setDepartments(res.data)
-    };
-    fetchDepartments();
-  }, []);
+      return res.data;
+    }
+  });
+  const departments = data;
+
+  const mutation = useMutation({
+    mutationFn: async (payload: DoctorForm) => {
+      const res = await createDoctor(payload);
+
+      if (!res.success) {
+        throw new Error(res.message);
+      }
+
+      return res.data;
+    },
+    onSuccess: (data) => {
+      console.log("DOCTOR CREATED:", data);
+      setStep(2);
+    },
+
+    onError: (error: Error) => {
+      setServerError(error.message);
+    },
+  })
+
 
   const onSubmit = async (data: DoctorForm) => {
-    setLoading(true);
+    // setLoading(true);
     setServerError(null);
 
-    const res = await createDoctor(data);
+    mutation.mutate(data);
+    // const res = await createDoctor(data);
 
-    if(!res.success){
-      setServerError(res.message);
-      setLoading(false);
-      return;
-    }
+    // if (!res.success) {
+    //   setServerError(res.message);
+    //   setLoading(false);
+    //   return;
+    // }
 
-    console.log("DOCTOR CREATED:", res.data);
-    setStep(2);
-    setLoading(false);
+    // console.log("DOCTOR CREATED:", res.data);
+    // setStep(2);
+    // setLoading(false);
 
   };
 
@@ -158,7 +194,7 @@ const CreateDoctor = () => {
                     className={inputCls(!!errors.consultation_fee)}
                     {...register("consultation_fee", {
                       required: "Consultation fee is required",
-                      min: { value: 0, message: "Invalid value" },    
+                      min: { value: 0, message: "Invalid value" },
                       valueAsNumber: true,
                     })}
                   />
@@ -173,15 +209,16 @@ const CreateDoctor = () => {
                     <SelectValue placeholder="Select Department" />
                   </SelectTrigger>
                   <SelectContent style={dropdownStyle}>
-                    {departments.length === 0 ? (
+                    {isLoading ? (
                       <div className="px-4 py-3 text-sm text-slate-400">Loading departments...</div>
                     ) : (
-                      departments.map((dep) => (
+                      departments?.map((dep) => (
                         <SelectItem key={dep.department_id} value={dep.department_id}>
                           {dep.department_name}
                         </SelectItem>
                       ))
                     )}
+                    {error && <p>{error.message}</p>}
                   </SelectContent>
                 </Select>
                 <input
@@ -200,10 +237,10 @@ const CreateDoctor = () => {
               <div className="pt-2">
                 <Button
                   type="submit"
-                  disabled={loading}
+                  disabled={mutation.isPending}
                   className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold text-sm shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
                 >
-                  {loading ? (
+                  {mutation.isPending ? (
                     <>
                       <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

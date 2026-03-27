@@ -54,3 +54,12 @@ export interface DoctorDataType {
   user: User,
   department: Department
 }
+
+export type ScheduleResponse = {
+  schedule_id: string;
+   day_of_week:"MONDAY"|"TUESDAY"|"WEDNESDAY"|"THURSDAY"|"FRIDAY"|"SATURDAY"|"SUNDAY";
+   start_time: string;
+   end_time: string;
+   slot_duration_minutes: number;
+   max_patients: number;
+}

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { usePatientOnboardingStore } from "../../store/patientOnboardingStore";
 import { useState } from "react";
-import { ClipboardList, ArrowRight } from "lucide-react";
+import { ClipboardList, ArrowRight, AlertTriangle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createPatient } from "@/features/general/api";
+import { useMutation } from "@tanstack/react-query";
 
 type PatientForm = {
   blood_group: string;
@@ -55,7 +56,6 @@ const FieldError = ({ message }: { message?: string }) =>
 
 const CreatePatient = () => {
   const setStep = usePatientOnboardingStore((s) => s.setStep);
-  const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
@@ -73,25 +73,34 @@ const CreatePatient = () => {
     },
   });
 
-  const onSubmit = async (data: PatientForm) => {
-      setLoading(true);
-      setServerError(null);
-
-      const payload = {
-        ...data,
-        date_of_birth: new Date(data.date_of_birth),
-      };
+  const mutation = useMutation({
+    mutationFn: async (payload: PatientForm) => {
 
       const res = await createPatient(payload);
 
-      if(!res.success){
-        setServerError(res.message)
-        setLoading(false);
-        return;
+      if (!res.success) {
+        throw new Error(res.message)
       }
-      console.log("PATIENT CREATED:", res.data);
-      setStep(2);
-      setLoading(false);
+    },
+    onSuccess: (data) => {
+      console.log("PATIENT CREATED: ", data);
+      setStep(2)
+    },
+
+    onError: (error: Error) => {
+      setServerError(error.message)
+    }
+  })
+
+  const onSubmit = async (data: PatientForm) => {
+    setServerError(null);
+
+    const payload = {
+      ...data,
+      date_of_birth: new Date(data.date_of_birth).toISOString(),
+    };
+
+    mutation.mutate(payload)
   };
 
   return (
@@ -200,17 +209,17 @@ const CreatePatient = () => {
 
               {serverError && (
                 <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
-                  <span>⚠</span> {serverError}
+                  <span><AlertTriangle /></span> {serverError}
                 </div>
               )}
 
               <div className="pt-2">
                 <Button
                   type="submit"
-                  disabled={loading}
+                  disabled={mutation.isPending}
                   className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold text-sm shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
                 >
-                  {loading ? (
+                  {mutation.isPending ? (
                     <>
                       <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

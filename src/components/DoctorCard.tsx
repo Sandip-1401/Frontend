@@ -4,6 +4,7 @@ import {
    CardContent,
 } from "@/components/ui/card"
 import { Stethoscope } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 type DoctorCard = {
    doctor_id: string
@@ -15,9 +16,12 @@ type DoctorCard = {
    status: string
 }
 const DoctorCard = ({ name, department, experience_year, fees, status, qualification, doctor_id }: DoctorCard) => {
+
+   const navigate = useNavigate();
+
    return (
       <div>
-         <Card onClick={() => console.log(doctor_id)} className="h-full w-full rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 dark:border-2 dark:border-gray-500 dark:bg-slate-900 cursor-pointer active:shadow-sm dark:hover:shadow-xl dark:hover:shadow-slate-300/30 dark:active:shadow-slate-500/20">
+         <Card onClick={() => {navigate(`/patient/doctor/${doctor_id}`), console.log(doctor_id)}} className="h-full w-full rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 dark:border-2 dark:border-gray-500 dark:bg-slate-900 cursor-pointer active:shadow-sm dark:hover:shadow-xl dark:hover:shadow-slate-300/30 dark:active:shadow-slate-500/20">
             <CardContent className="p-5 space-y-4">
                <div className="flex items-center gap-3">
                   <div className="p-3 bg-cyan-100 text-cyan-600 rounded-full">

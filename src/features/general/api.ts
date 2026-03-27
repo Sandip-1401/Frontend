@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
-import type { Department, DoctorData, DoctorDataType, PatientData, PatientProfileResponse } from "@/types/apiResponse";
+import type { Department, DoctorData, DoctorDataType, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -36,7 +36,7 @@ export const getAllDoctors = async (search: string, departmentId: string, sort: 
       pagination: any,
       data: DoctorDataType[]
    }>(() => axiosInstance.get(`/doctors?department_id=${departmentId}&sort=${sort}&order=${order}&search=${search}&page=${''}&limit=${''}`))
-
+   console.log("Data fetched...!");
    if(!res.success) return res;
 
    return {
@@ -44,3 +44,8 @@ export const getAllDoctors = async (search: string, departmentId: string, sort: 
       data: res.data.data as DoctorDataType[]
    }
 }
+
+export const getDoctorSchedule = (doctor_id: string) => 
+   handleApi<ScheduleResponse>(() =>
+      axiosInstance.get(`/schedules/${doctor_id}`)
+   )

@@ -4,6 +4,7 @@ import DoctorDashboard from "../pages/doctors/DoctorDashboard";
 import AdminLayout from "../pages/admin/AdminLayout";
 import {PatientProfile} from "@/pages/patients/PatientProfile";
 import ShowDoctors from "@/pages/patients/ShowDoctors";
+import ShowDoctorSchedule from "@/pages/patients/ShowDoctorSchedule";
 
 export interface RouteType{
    path: string,
@@ -40,6 +41,12 @@ export const protectedRoute: RouteType[] =  [
       element: <ShowDoctors />,
       allowedRole: ["PATIENT"]
    },
+   {
+      path: '/patient/doctor/:doctorId',
+      element: <ShowDoctorSchedule />,
+      allowedRole: ["PATIENT"]
+   },
+
    {
       path: '/doctor',
       element: <DoctorDashboard />,

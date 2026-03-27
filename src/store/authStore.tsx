@@ -37,9 +37,11 @@ export const useAuthStore = create<AuthState>((set) => ({
       })
    },
 
-   setRole: (role: Role) => set({
-      role
-   })
+   setRole: (role: Role) => {
+      localStorage.setItem("role", role);
+      set({
+         role
+   })}
 }))
 
 

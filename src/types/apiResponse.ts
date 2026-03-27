@@ -63,3 +63,10 @@ export type ScheduleResponse = {
    slot_duration_minutes: number;
    max_patients: number;
 }
+
+export type AppointmentCreate = {
+  doctor_id: string,
+  appointment_date: string
+  appointment_time: string
+  reason: string
+}

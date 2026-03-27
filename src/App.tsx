@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import AppRoute from "./routes/AppRoute"
 import { useTheamStroe } from "./store/theamStore"
+import { Toaster } from "./components/ui/sonner";
 
 const App = () => {
 
@@ -15,7 +16,8 @@ const App = () => {
 
   return (
     <div>
-      <AppRoute />      
+      <AppRoute />
+      <Toaster position="top-center" richColors/>   
     </div>
   )
 }

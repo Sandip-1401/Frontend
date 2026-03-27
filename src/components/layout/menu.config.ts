@@ -70,7 +70,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       icon: User,
     },
     {
-      label: "All Doctors",
+      label: "Book Appointment",
       path: "/patient/all-doctors",
       icon: Dock
     }

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const MyLoader = () => {
    return (
       <div className="mx-auto my-auto flex flex-col items-center justify-center">

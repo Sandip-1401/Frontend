@@ -50,8 +50,8 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       icon: LayoutDashboard,
     },
     {
-      label: "Patient",
-      path: "/doctor/app",
+      label: "My Profile",
+      path: "/doctor/profile",
       icon: Stethoscope,
     },
   ],
@@ -63,7 +63,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       icon: LayoutDashboard,
     },
     {
-      label: "Profiles",
+      label: "My Profile",
       path: "/patient/profile",
       icon: User,
     },

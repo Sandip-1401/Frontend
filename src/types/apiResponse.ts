@@ -1,3 +1,5 @@
+import type { Role } from "./auth";
+
 export type PatientData = null;
 
 export type DoctorData = null;
@@ -57,11 +59,11 @@ export interface DoctorDataType {
 
 export type ScheduleResponse = {
   schedule_id: string;
-   day_of_week:"MONDAY"|"TUESDAY"|"WEDNESDAY"|"THURSDAY"|"FRIDAY"|"SATURDAY"|"SUNDAY";
-   start_time: string;
-   end_time: string;
-   slot_duration_minutes: number;
-   max_patients: number;
+  day_of_week: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY";
+  start_time: string;
+  end_time: string;
+  slot_duration_minutes: number;
+  max_patients: number;
 }
 
 export type AppointmentCreate = {
@@ -70,3 +72,33 @@ export type AppointmentCreate = {
   appointment_time: string
   reason: string
 }
+
+export interface DoctorProfileType {
+  doctor_id: string,
+  qualification: string,
+  experience_years: number,
+  consultation_fee: number,
+  status: string,
+  user: User,
+  department: Department,
+  address: Address
+  role: Role,
+  is_available: boolean
+}
+
+export type Doctor = {
+  doctor_id: string,
+  qualification: string,
+  experience_years: number,
+  consultation_fee: string,
+  is_available: true,
+  status: string,
+  user: User,
+  department: Department,
+  address: Address
+  role: Role,
+}
+
+export type DoctorProfileResponse = {
+  doctor: Doctor;
+};

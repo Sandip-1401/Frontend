@@ -11,7 +11,7 @@ import FemaleIcon from "@/assets/FemaleIcon.jpg"
 import DynamicBreadcrumb from "@/components/DynamicBreadcrumb";
 import { useQuery } from "@tanstack/react-query";
 import MyLoader from "@/components/MyLoader";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export const PatientProfile = () => {
   

@@ -24,7 +24,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import MyLoader from "@/components/MyLoader"
-import ErrorMessage from "./ErrorMessage"
+import ErrorMessage from "../../components/ErrorMessage"
 
 // type Sort = "experience_years" | "consultation_fee" | null;
 // type Order = "ASC" | "DESC" | null;

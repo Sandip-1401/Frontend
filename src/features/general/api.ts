@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
-import type { AppointmentCreate, Department, DoctorData, DoctorDataType, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
+import type { AppointmentCreate, Department, DoctorData, DoctorDataType, DoctorProfileResponse, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -61,4 +61,10 @@ export const getAvilableSlots = (doctor_id: string, date: string) =>
 export const createAppointment = (data: {}) => 
    handleApi<AppointmentCreate>(() => 
       axiosInstance.post('/appointments', data)
+   )
+
+
+export const getMyDocProfile = () =>
+   handleApi<DoctorProfileResponse>(() => 
+      axiosInstance.get('/doctors/my-profile')
    )

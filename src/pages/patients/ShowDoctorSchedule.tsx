@@ -60,18 +60,12 @@ const ShowDoctorSchedule = () => {
 
       return isAvilableDay && !isPast;
    }
-   // console.log(selectedDate)
 
    //selected date ka day nikala 
    const selectedDay = selectedDate ? getDaysFromDate(selectedDate) : null;
 
    //matching schedule find kya...us selectedDate ke day par se
    const selectedSchedule = schedule.find((s) => s.day_of_week === selectedDay);
-
-   // console.log("Selected Date:", selectedDate);
-   // console.log("Selected Day:", selectedDay);
-   // console.log("Selected Schedule:", selectedSchedule);
-
 
    // generete all slote possible
    const generateSlotes = (schedule: ScheduleResponse): string[] => {
@@ -104,17 +98,17 @@ const ShowDoctorSchedule = () => {
       return `${year}-${month}-${day}`;
    };
 
-   
+
    const fetchSlots = async () => {
       if (!selectedDate) return;
-      
+
       const formattedDate = selectedDate
-      ? formatDateLocal(selectedDate)
-      : "";
+         ? formatDateLocal(selectedDate)
+         : "";
       const res = await getAvilableSlots(String(doctorId), formattedDate)
-      
+
       if (!res.success) return;
-      
+
       setAvilableSlots(res.data)
    };
 
@@ -182,7 +176,7 @@ const ShowDoctorSchedule = () => {
       });
 
       await fetchSlots();
-      
+
       setSelectedSlote(null);
       setReason('')
    }
@@ -190,7 +184,7 @@ const ShowDoctorSchedule = () => {
 
 
    return (
-      <div className="p-4">
+      <div className="p-4 pb-10">
          <DynamicBreadcrumb
             homeHref={"/patient"}
             items={[
@@ -202,57 +196,64 @@ const ShowDoctorSchedule = () => {
             <h1 className="text-3xl font-bold text-primary ml-4">Doctor Schedule</h1>
          </div>
 
-         <div>
-            <p className='text-lg dark:text-cyan-500 text-gray-800 font-semibold mt-4 mx-3'>Pick Date</p>
-            <Calendar
-               mode='single'
-               selected={selectedDate}
-               onSelect={setSelectedDate}
-               disabled={(date) => !isDateAvilable(date)}
-               className='min-w-80 bg-transparent border-3 rounded-xl p-4 shadow-[0_0_8px_#000000] mx-auto mt-3 dark:bg-slate-900'
-            />
-
-            <p className='text-lg dark:text-cyan-500 text-gray-800 font-semibold mt-4 mx-3'>Select Slot</p>
-            {!selectedDate && (
-               <div className='bg-red-300 mx-3 flex items-center justify-center p-3 rounded-lg mt-3 text-red-500'>
-                  <AlertCircle className='mr-2' /> Please select one date...!
-               </div>
-            )}
-            <div className={`${selectedDate ? "min-w-80 p-4 grid grid-cols-2 gap-1" : "mb-2"}`}>
-               {allSlots.map((slot) => {
-
-                  // <div key={slot} className='w-full h-full flex items-center justify-center rounded-md py-2 hover:bg-cyan-400 hover:border-none bg-gray-300'>{slot}</div>
-
-                  const isAvilable = isSloteAvilable(slot);
-                  return (
-                     <button
-                        key={slot}
-                        onClick={() => setSelectedSlote(slot)}
-                        className={`w-full h-full flex items-center justify-center rounded-md py-2 
-                           ${isAvilable
-                              ? selectedSlote === slot ? "bg-cyan-500 hover:border-none" : " bg-gray-400 active:scale-95 duration-700 dark:text-gray-300 dark:bg-slate-800"
-                              : "bg-red-400 cursor-not-allowed "}`}
-                     >
-                        {slot}
-                     </button>
-                  )
-
-               })}
-            </div>
-            <p className={`text-lg dark:text-cyan-500 text-gray-800 font-semibold  mx-3`}>Give Reason:</p>
-            <div className='mx-3 mt-3'>
-               <textarea
-                  placeholder="Enter reason"
-                  value={reason}
-                  onChange={(e) => setReason(e.target.value)}
-                  className='border border-gray-600 rounded-lg w-full min-h-24 p-2 bg-gray-200 dark:bg-slate-800'
+         <div className='sm:grid sm:grid-cols-12 sm:px-10  '>
+            <div className='sm:col-span-6 p-3 '>
+               <p className='text-lg dark:text-cyan-500 text-gray-800 font-semibold  mx-3 '>Pick Date</p>
+               <Calendar
+                  mode='single'
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  disabled={(date) => !isDateAvilable(date)}
+                  className='min-w-80 bg-gray-100 border-3 rounded-xl p-4 shadow-[0_0_5px_#000000] mt-3 dark:bg-slate-800 mx-auto w-full '
                />
             </div>
-            {serverError && (
-               <p className="text-red-500 text-sm">{serverError}</p>
-            )}
-            <div className='m-3'>
-               <Button onClick={handleBooking} className='py-5 w-full '>Book Appointment</Button>
+            <div className='sm:col-span-5 sm:col-start-8 '>
+               <div>
+                  <p className='text-lg dark:text-cyan-500 text-gray-800 font-semibold mt-4 mx-3'>Select Slot</p>
+                  {!selectedDate && (
+                     <div className='bg-red-300 mx-3 flex items-center justify-center p-3 rounded-lg mt-3 text-red-500'>
+                        <AlertCircle className='mr-2' /> Please select one date...!
+                     </div>
+                  )}
+                  <div className={`${selectedDate ? "min-w-80 p-4 grid grid-cols-2 gap-1" : "mb-2"}`}>
+                     {allSlots.map((slot) => {
+
+                        const isAvilable = isSloteAvilable(slot);
+                        return (
+                           <button
+                              key={slot}
+                              onClick={() => setSelectedSlote(slot)}
+                              className={`w-full h-full flex items-center justify-center rounded-md py-2 
+                           ${isAvilable
+                                    ? selectedSlote === slot ? "bg-cyan-500 hover:border-none" : " bg-gray-300 active:scale-95 duration-700 dark:text-gray-300 dark:bg-slate-700"
+                                    : "bg-red-400 cursor-not-allowed "}`}
+                           >
+                              {slot}
+                           </button>
+                        )
+
+                     })}
+                  </div>
+               </div>
+               <div>
+                  <p className={`text-lg dark:text-cyan-500 text-gray-800 font-semibold  mx-3`}>Give Reason:</p>
+                  <div className='mx-3 mt-3'>
+                     <textarea
+                        placeholder="Enter reason"
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                        className='border border-gray-600 rounded-lg w-full min-h-24 p-2 bg-gray-200 dark:bg-slate-800'
+                     />
+                  </div>
+               </div>
+               <div>
+                  {serverError && (
+                     <p className="text-red-500 text-sm">{serverError}</p>
+                  )}
+                  <div className='m-3'>
+                     <Button onClick={handleBooking} className='py-5 w-full '>Book Appointment</Button>
+                  </div>
+               </div>
             </div>
          </div>
 

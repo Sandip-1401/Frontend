@@ -3,8 +3,6 @@ import {
   User,
   Stethoscope,
   Users,
-  DotIcon,
-  LucidePlugZap,
   Dock,
 } from "lucide-react";
 

@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { getMyNotifications } from "@/features/general/api";
 import MyLoader from "../MyLoader";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import type { NotificationData } from "@/types/apiResponse";
 import ErrorMessage from "../ErrorMessage";
 

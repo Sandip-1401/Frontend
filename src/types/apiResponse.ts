@@ -102,3 +102,31 @@ export type Doctor = {
 export type DoctorProfileResponse = {
   doctor: Doctor;
 };
+
+export interface NotificationData{
+  notification_id: string
+  receiver_id: string
+  sender_id: string
+  reference_id: string
+  created_at: string
+  type: string
+  title: string
+  message: string
+  is_read: boolean
+}
+
+export interface AppointmentStatus{
+  appointment_status_id: string,
+  status_name: "APPROVED" | "CANCELLED" | "BOOKED" | "COMPLETED" | string 
+}
+
+export interface Appointment{
+  appointment_id: string
+  appointment_date: string
+  appointment_time: string
+  reason: string
+  created_at: string
+  patient: Patient
+  doctor: Doctor
+  status: AppointmentStatus
+}

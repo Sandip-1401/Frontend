@@ -81,7 +81,7 @@ export const DoctorProfile = () => {
                         </div>
                      </div>
 
-                     <Tabs defaultValue="medical" className="w-full flex flex-col">
+                     <Tabs defaultValue="personal" className="w-full flex flex-col">
                         <TabsList className="inline-flex sm:h-12 items-center justify-start border sm:rounded-full bg-transparent sm:p-0 w-full sm:gap-8 mb-6 text-sm overflow-x-scroll rounded-full sm:overflow-hidden scrollbar-hide dark:border-gray-200/40">
                            <TabsTrigger value="personal" className="sm:rounded-full rounded-full font-semibold text-md shadow-none data-[state=active]:bg-primary data-[state=active]:text-white dark:text-gray-200 dark:hover:text-gray-100 p-3">
                               Personal Details

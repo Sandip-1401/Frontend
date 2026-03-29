@@ -6,6 +6,11 @@ import {PatientProfile} from "@/pages/patients/PatientProfile";
 import ShowDoctors from "@/pages/patients/ShowDoctors";
 import ShowDoctorSchedule from "@/pages/patients/ShowDoctorSchedule";
 import DoctorProfile from "@/pages/doctors/DoctorProfile";
+import PendingAppointment from "@/pages/doctors/appoitment/PendingAppointment";
+import ApprovedAppointment from "@/pages/doctors/appoitment/ApprovedAppointment";
+import CompletedAppointment from "@/pages/doctors/appoitment/CompletedAppointment";
+import CancelledAppointment from "@/pages/doctors/appoitment/CancelledAppointment";
+import PendingAppointmentPage from "@/pages/doctors/appoitment/ShowAppointmentPage";
 
 export interface RouteType{
    path: string,
@@ -58,5 +63,29 @@ export const protectedRoute: RouteType[] =  [
       element: <DoctorProfile />,
       allowedRole: ["DOCTOR"],
    },
-
+   {
+      path: '/doctor/appointments/pending-appointment',
+      element: <PendingAppointment />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/approved-appointment',
+      element: <ApprovedAppointment />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/completed-appointment',
+      element: <CompletedAppointment />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/canclled-appointment',
+      element: <CancelledAppointment />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/pending-appointment/:appointmentId',
+      element: <PendingAppointmentPage />,
+      allowedRole: ["DOCTOR"]
+   }
 ]

@@ -1,6 +1,7 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
-import type { AppointmentCreate, Department, DoctorData, DoctorDataType, DoctorProfileResponse, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
+import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
+import type { Appointment, AppointmentCreate, Department, DoctorData, DoctorDataType, DoctorProfileResponse, NotificationData, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -36,7 +37,7 @@ export const getAllDoctors = async (search: string, departmentId: string, sort: 
       pagination: any,
       data: DoctorDataType[]
    }>(() => axiosInstance.get(`/doctors?department_id=${departmentId}&sort=${sort}&order=${order}&search=${search}&page=${''}&limit=${''}`))
-   console.log("Data fetched...!");
+
    if(!res.success) return res;
 
    return {
@@ -67,4 +68,35 @@ export const createAppointment = (data: {}) =>
 export const getMyDocProfile = () =>
    handleApi<DoctorProfileResponse>(() => 
       axiosInstance.get('/doctors/my-profile')
+   )
+
+export const getPendingForDoctor = () =>
+   handleApi<AppointmentForDoctor[]>(() => 
+      axiosInstance.get('/appointments/pending-appointment')
+   )
+
+export const getApprovedForDoctor = () =>
+   handleApi<AppointmentForDoctor[]>(() => 
+      axiosInstance.get('/appointments/approved-appointment')
+   )
+
+export const getCompletedForDoctor = () =>
+   handleApi<AppointmentForDoctor[]>(() => 
+      axiosInstance.get('/appointments/completed-appointment')
+   )
+
+export const getCancelledForDoctor = () =>
+   handleApi<AppointmentForDoctor[]>(() => 
+      axiosInstance.get('/appointments/cancelled-appointment')
+   )
+
+export const getMyNotifications = () => 
+   handleApi<NotificationData[]>(() => 
+      axiosInstance.get('/notifications')
+   )
+
+
+export const getAppointmentById = (appointment_id: string) => 
+   handleApi<Appointment>(() => 
+      axiosInstance.get(`/appointments/${appointment_id}`)
    )

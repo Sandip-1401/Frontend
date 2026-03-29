@@ -54,6 +54,29 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       path: "/doctor/profile",
       icon: Stethoscope,
     },
+    {
+      label: "Appointments",
+      // path: "/doctor/appointments",
+      icon: Stethoscope,
+      children: [
+        {
+          label: "Pending",
+          path: "/doctor/appointments/pending-appointment",
+        },
+        {
+          label: "Approved",
+          path: "/doctor/appointments/approved-appointment",
+        },
+        {
+          label: "Completed",
+          path: "/doctor/appointments/completed-appointment",
+        },
+        {
+          label: "Cancelled",
+          path: "/doctor/appointments/canclled-appointment",
+        },
+      ]
+    },
   ],
 
   PATIENT: [

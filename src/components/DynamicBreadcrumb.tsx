@@ -63,17 +63,19 @@ const DynamicBreadcrumb = ({ items, homeHref }: DynamicBreadcrumbProps) => {
                 <BreadcrumbItem
                   className={isLast ? "min-w-0 flex-1" : "shrink-0"}
                 >
-                  {item.href ? (
+                  {isLast ? (
+                    <BreadcrumbPage className="text-primary font-semibold text-[11px] sm:text-sm truncate block">
+                      {item.label}
+                    </BreadcrumbPage>
+                  ) : (
+                    
                     <BreadcrumbLink
                       onClick={() => navigate(item.href ?? "")}
                       className="text-[11px] sm:text-sm hover:text-primary transition-colors whitespace-nowrap"
                     >
                       {item.label}
                     </BreadcrumbLink>
-                  ) : (
-                    <BreadcrumbPage className="text-primary font-semibold text-[11px] sm:text-sm truncate block">
-                      {item.label}
-                    </BreadcrumbPage>
+                    
                   )}
                 </BreadcrumbItem>
               </React.Fragment>

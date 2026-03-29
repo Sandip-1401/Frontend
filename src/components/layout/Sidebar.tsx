@@ -37,7 +37,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
   return (
     <TooltipProvider delayDuration={0}>
       <div className="h-full flex flex-col text-foreground border-r border-border shadow-sm dark:bg-slate-950 dark:border-gray-600 p-1.5">
-        
+
         <ScrollArea className="flex-1 py-3 px-2">
           <nav className="space-y-1.5">
             {menuItems.map((item, i) => {
@@ -54,7 +54,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                       className={cn(
                         "w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
                         collapsed && "justify-center px-0 py-2.5",
-                        "text-muted-foreground hover:text-foreground "
+                        "text-muted-foreground hover:text-foreground dark:text-white "
                       )}
                     >
                       {Icon && (
@@ -80,24 +80,25 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                     {isOpen && !collapsed && (
                       <div className="ml-4 mt-0.5 mb-0.5 space-y-0.5 border-l border-border pl-3">
                         {item.children.map((child, idx) => {
-                          const isActive = location.pathname === String(item.path);
+                          const isActive = location.pathname === String(child.path);
 
                           return (
                             <Link
                               key={idx}
                               to={String(child.path)}
                               className={cn(
-                                "block rounded-md px-3 py-1.5 text-sm transition-all duration-150",
+                                "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 hover:bg-cyan-100 dark:hover:bg-slate-700",
+                                // collapsed && "justify-center px-0 py-2.5",
                                 isActive
-                                  ? "bg-primary text-primary-foreground font-medium"
-                                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                                  ? "bg-primary hover:bg-primary dark:hover:bg-primary text-primary-foreground shadow-sm"
+                                  : "dark:text-gray-100 hover:text-foreground "
                               )}
                             >
                               {child.label}
                             </Link>
                           );
                         })}
-                      </div>  
+                      </div>
                     )}
                   </div>
                 );
@@ -154,7 +155,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
             })}
           </nav>
         </ScrollArea>
-        
+
       </div>
     </TooltipProvider>
   );

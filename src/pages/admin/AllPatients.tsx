@@ -30,7 +30,7 @@ const AllPatients = () => {
    const formattedData: PatientWithSerial[] = 
       data?.map((item, idx) => ({
          ...item, 
-         serial: idx + 1
+         serial: idx + 1,
       })) || [];
 
    if(isLoading){
@@ -39,7 +39,6 @@ const AllPatients = () => {
    if(error){
       return <ErrorMessage errorProp={(error as Error).message} />
    }
-
 
   return (
     <div className='p-6'>

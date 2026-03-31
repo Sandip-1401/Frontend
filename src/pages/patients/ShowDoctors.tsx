@@ -82,7 +82,7 @@ const ShowDoctors = () => {
             console.log("Depart fetch message: ", res.message);
             return;
          }
-         setDepartments(res.data)
+         setDepartments(res.data)   
       };
 
       fetchDepartments();

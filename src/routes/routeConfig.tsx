@@ -11,6 +11,7 @@ import CompletedAppointment from "@/pages/doctors/appoitment/CompletedAppointmen
 import CancelledAppointment from "@/pages/doctors/appoitment/CancelledAppointment";
 import PendingAppointmentPage from "@/pages/doctors/appoitment/ShowAppointmentPage";
 import AllPatients from "@/pages/admin/AllPatients";
+import ViewPatient from "@/pages/admin/ViewPatient";
 
 export interface RouteType{
    path: string,
@@ -28,6 +29,11 @@ export const protectedRoute: RouteType[] =  [
    {
       path: '/admin/patients',
       element: <AllPatients />,
+      allowedRole: ["ADMIN"]
+   },
+   {
+      path: '/admin/patients/:patientId',
+      element: <ViewPatient />,
       allowedRole: ["ADMIN"]
    },
    {

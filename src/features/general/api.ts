@@ -115,9 +115,7 @@ export const allPatients = async () => {
    const res = await handleApi<{
       pagination: any,
       data: Patient[]
-   }>(() => 
-      axiosInstance.get('/patients')
-   )
+   }>(() => axiosInstance.get('/patients'))
    if(!res.success){
       return res;
    }
@@ -127,3 +125,14 @@ export const allPatients = async () => {
       data: res.data.data as Patient[]
    }
 }
+
+export const getPatientById = (patientId: string) => 
+   handleApi<Patient>(() => 
+      axiosInstance.get(`/patients/${patientId}`)
+   )
+
+
+export const deletePatientById = (patientId: string) => 
+   handleApi<null>(() => 
+      axiosInstance.delete(`/patients/${patientId}`)
+   )

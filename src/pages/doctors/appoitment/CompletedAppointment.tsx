@@ -9,7 +9,7 @@ import ErrorMessage from '@/components/ErrorMessage'
 import DynamicBreadcrumb from '@/components/DynamicBreadcrumb'
 
 
-const Completed = () => {
+const CompletedAppointment = () => {
 
   const navigate = useNavigate()
   const columns = appointmentHeaderForDoctor;
@@ -63,4 +63,4 @@ const Completed = () => {
   );
 };
 
-export default Completed;
+export default CompletedAppointment;

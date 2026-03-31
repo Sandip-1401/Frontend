@@ -4,6 +4,7 @@ import {
   Stethoscope,
   Users,
   Dock,
+  CalendarClock,
 } from "lucide-react";
 
 export type Role = "ADMIN" | "DOCTOR" | "PATIENT";
@@ -27,20 +28,6 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       path: "/admin/patients",
       icon: LayoutDashboard,
     },
-    {
-      label: "Management",
-      icon: Users,
-      children: [
-        {
-          label: "Users",
-          path: "/admin/users",
-        },
-        {
-          label: "Departments",
-          path: "/admin/departments",
-        },
-      ],
-    },
   ],
 
   DOCTOR: [
@@ -56,8 +43,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
     },
     {
       label: "Appointments",
-      // path: "/doctor/appointments",
-      icon: Stethoscope,
+      icon: CalendarClock,
       children: [
         {
           label: "Pending",
@@ -93,7 +79,7 @@ export const menuConfig: Record<Role, MenuItem[]> = {
     {
       label: "Book Appointment",
       path: "/patient/all-doctors",
-      icon: Dock
+      icon: CalendarClock
     }
   ],
 };

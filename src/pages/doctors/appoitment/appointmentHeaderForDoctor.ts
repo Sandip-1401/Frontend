@@ -9,7 +9,7 @@ export const appointmentHeaderForDoctor: Column<AppointmentWithSerial>[] = [
   {
     header: "PATIENT NAME",
     key: "patient",
-    render: (row) => row.patient.user.name
+    render: (row) => row.patient?.user?.name
   },
   {
     header: "DATE",

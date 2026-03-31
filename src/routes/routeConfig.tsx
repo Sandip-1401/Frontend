@@ -1,7 +1,6 @@
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import PatientDashboard from "../pages/patients/PatientDashboard";
 import DoctorDashboard from "../pages/doctors/DoctorDashboard";
-import AdminLayout from "../pages/admin/AdminLayout";
 import {PatientProfile} from "@/pages/patients/PatientProfile";
 import ShowDoctors from "@/pages/patients/ShowDoctors";
 import ShowDoctorSchedule from "@/pages/patients/ShowDoctorSchedule";
@@ -11,6 +10,7 @@ import ApprovedAppointment from "@/pages/doctors/appoitment/ApprovedAppointment"
 import CompletedAppointment from "@/pages/doctors/appoitment/CompletedAppointment";
 import CancelledAppointment from "@/pages/doctors/appoitment/CancelledAppointment";
 import PendingAppointmentPage from "@/pages/doctors/appoitment/ShowAppointmentPage";
+import AllPatients from "@/pages/admin/AllPatients";
 
 export interface RouteType{
    path: string,
@@ -22,15 +22,13 @@ export interface RouteType{
 export const protectedRoute: RouteType[] =  [
    {
       path: '/admin',
-      element: <AdminLayout />,
+      element: <AdminDashboard />,
       allowedRole: ["ADMIN"],
-      children: [
-         {
-            path: "",
-            element: <AdminDashboard />,
-            allowedRole: ["ADMIN"],
-         },
-      ]
+   },
+   {
+      path: '/admin/patients',
+      element: <AllPatients />,
+      allowedRole: ["ADMIN"]
    },
    {
       path: '/patient',
@@ -85,6 +83,21 @@ export const protectedRoute: RouteType[] =  [
    },
    {
       path: '/doctor/appointments/pending-appointment/:appointmentId',
+      element: <PendingAppointmentPage />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/approved-appointment/:appointmentId',
+      element: <PendingAppointmentPage />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/completed-appointment/:appointmentId',
+      element: <PendingAppointmentPage />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/appointments/cancelled-appointment/:appointmentId',
       element: <PendingAppointmentPage />,
       allowedRole: ["DOCTOR"]
    }

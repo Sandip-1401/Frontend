@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
-import type { Appointment, AppointmentCreate, Department, DoctorData, DoctorDataType, DoctorProfileResponse, NotificationData, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
+import type { Appointment, AppointmentCreate, Department, DoctorData, DoctorDataType, DoctorProfileResponse, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -70,7 +70,7 @@ export const getMyDocProfile = () =>
       axiosInstance.get('/doctors/my-profile')
    )
 
-export const getPendingForDoctor = () =>
+export const   getPendingForDoctor = () =>
    handleApi<AppointmentForDoctor[]>(() => 
       axiosInstance.get('/appointments/pending-appointment')
    )
@@ -100,3 +100,30 @@ export const getAppointmentById = (appointment_id: string) =>
    handleApi<Appointment>(() => 
       axiosInstance.get(`/appointments/${appointment_id}`)
    )
+
+export const rejectAppointment = (appointment_id: string) =>
+   handleApi(() => 
+      axiosInstance.patch(`/doctors/appointments/${appointment_id}/reject`)
+   )
+
+export const approveAppointment = (appointment_id: string) =>
+   handleApi(() => 
+      axiosInstance.patch(`/doctors/appointments/${appointment_id}/approve`)
+   )
+
+export const allPatients = async () => {
+   const res = await handleApi<{
+      pagination: any,
+      data: Patient[]
+   }>(() => 
+      axiosInstance.get('/patients')
+   )
+   if(!res.success){
+      return res;
+   }
+
+   return {
+      success: true as const,
+      data: res.data.data as Patient[]
+   }
+}

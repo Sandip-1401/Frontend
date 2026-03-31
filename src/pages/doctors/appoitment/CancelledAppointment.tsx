@@ -55,7 +55,7 @@ const CancelledAppointment = () => {
         columns={columns}
         idKey="appointment_id"
         onView={(row) => {
-          navigate(`/doctor/appointments/canclled-appointment/${row.appointment_id}`)
+          navigate(`/doctor/appointments/cancelled-appointment/${row.appointment_id}`)
         }}
         
       />

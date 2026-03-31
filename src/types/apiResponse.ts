@@ -117,7 +117,7 @@ export interface NotificationData{
 
 export interface AppointmentStatus{
   appointment_status_id: string,
-  status_name: "APPROVED" | "CANCELLED" | "BOOKED" | "COMPLETED" | string 
+  status_name: "APPROVED" | "CANCELLED" | "BOOKED" | "COMPLETED"
 }
 
 export interface Appointment{
@@ -129,4 +129,8 @@ export interface Appointment{
   patient: Patient
   doctor: Doctor
   status: AppointmentStatus
+}
+
+export type PatientWithSerial = Patient & {
+  serial: number
 }

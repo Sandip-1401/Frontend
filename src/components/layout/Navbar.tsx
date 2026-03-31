@@ -95,12 +95,20 @@ const Navbar = ({ onToggle }: NavbarProps) => {
                   {error && <ErrorMessage errorProp={(error as Error).message} />}
                   {data?.map((notify, idx) => (
 
-                  <Card key={idx} size="sm" className="mx-auto w-full max-w-sm mt-2 dark:border dark:border-cyan-100">
+                  <Card key={idx} size="sm" className="mx-auto w-full max-w-sm mt-2 dark:border dark:border-cyan-100/30">
                     <CardHeader>
-                      <CardTitle className="dark:text-cyan-400">{notify.title}</CardTitle>
-                      <CardDescription>
-                        {/* This card uses the small size variant. */}
+                      <div className="flex justify-between">
+                        <CardTitle className="dark:text-cyan-400">{notify.title}</CardTitle>
+                      <CardDescription className="dark:text-gray-400 text-gray-400">
+                        {notify?.created_at && new Date(notify.created_at).toLocaleString("en-IN", {
+                          day: "2-digit",
+                          month: "numeric",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </CardDescription>
+                      </div>
                     </CardHeader>
                     <CardContent>
                       <p className="dark:text-white">

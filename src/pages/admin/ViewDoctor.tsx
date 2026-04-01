@@ -41,7 +41,7 @@ const ViewDoctor = () => {
       mutationFn: deleteDoctorById,
 
       onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["patients"] });
+      queryClient.invalidateQueries({ queryKey: ["doctors"] });
    }
    })
 

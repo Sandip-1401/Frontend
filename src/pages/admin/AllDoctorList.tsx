@@ -26,13 +26,11 @@ import MyLoader from "@/components/MyLoader"
 import ErrorMessage from "../../components/ErrorMessage"
 import { useNavigate } from "react-router-dom"
 
+export const orderSortButtonClasName = `h-8 w-8 bg-cyan-400 rounded-full ring-1 ring-cyan-500/70 hover:scale-105 active:scale-100 hover:shadow-cyan-500/60 active:shadow-cyan-500/30 active:bg-cyan-500 shadow-[0_0_7px_#22d3ee] dark:shadow-[0_0_15px_#22d3ee] text-white flex items-center justify-center  cursor-pointer transition-transform duration-300`;
 
-const orderSortButtonClasName = `h-8 w-8 bg-cyan-400 rounded-full ring-1 ring-cyan-500/70 hover:scale-105 active:scale-100 hover:shadow-cyan-500/60 active:shadow-cyan-500/30 active:bg-cyan-500 shadow-[0_0_7px_#22d3ee] dark:shadow-[0_0_15px_#22d3ee] text-white flex items-center justify-center  cursor-pointer transition-transform duration-300`;
+export const toggleGroupItem = "w-1/2 px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"
 
-const toggleGroupItem = "w-1/2 px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"
-
-const ShowDoctors = () => {
-
+const AllDoctorList = () => {
    const navigate = useNavigate();
    const [search, setSearch] = useState<string>('');
    const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -51,26 +49,27 @@ const ShowDoctors = () => {
          }
          return res.data;
       },
-      // staleTime: 1000 * 60 * 5,
-      // refetchOnWindowFocus: false
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false
    })
 
-   const {data: departmentData, isLoading: isDepartmentLoading, error: departmentError} = useQuery({
+   const { data: departmentData, isLoading: isDepartmentLoading, error: departmentError } = useQuery({
       queryKey: ["department"],
       queryFn: async () => {
          const res = await getDepartments();
 
-         if(!res.success){
+         if (!res.success) {
             throw new Error(res.message);
          }
          return res.data;
       },
-      // staleTime: 1000 * 60 * 5,
-      // refetchOnWindowFocus: false
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false
    })
+
+   // console.log(departmentData);
+
    
-   console.log(departmentData);
-   console.log(data)
 
    useEffect(() => {
       const timer = setTimeout(() => {
@@ -166,8 +165,8 @@ const ShowDoctors = () => {
 
          <div className="px-10 py-5 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-7 items-center justify-center">
 
-         {isLoading &&  (<MyLoader />)} 
-         {(error || departmentError) && (<ErrorMessage errorProp={(error as Error).message} />)}
+            {isLoading && (<MyLoader />)}
+            {(error || departmentError) && (<ErrorMessage errorProp={(error as Error).message} />)}
 
             {data?.map((doc, idx) => (
                <motion.div
@@ -178,7 +177,7 @@ const ShowDoctors = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                >
                   <DoctorCard
-                     onClickHandle={() => navigate(`/patient/doctor/${doc.doctor_id}`)}
+                     onClickHandle={() => navigate(`/admin/doctors/${doc.doctor_id}`)}
                      key={idx}
                      name={doc.user.name}
                      doctor_id={doc.doctor_id}
@@ -196,4 +195,4 @@ const ShowDoctors = () => {
    )
 }
 
-export default ShowDoctors
+export default AllDoctorList

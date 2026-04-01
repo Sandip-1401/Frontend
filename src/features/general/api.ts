@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
-import type { Appointment, AppointmentCreate, Department, DoctorData, DoctorDataType, DoctorProfileResponse, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
+import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -111,11 +111,11 @@ export const approveAppointment = (appointment_id: string) =>
       axiosInstance.patch(`/doctors/appointments/${appointment_id}/approve`)
    )
 
-export const allPatients = async () => {
+export const allPatients = async (search: string, gender: string, sort: string, order: string) => {
    const res = await handleApi<{
       pagination: any,
       data: Patient[]
-   }>(() => axiosInstance.get('/patients'))
+   }>(() => axiosInstance.get(`/patients?gender=${gender}&sort=${sort}&order=${order}&search=${search}&page=${''}&limit=${''}`))
    if(!res.success){
       return res;
    }
@@ -136,3 +136,13 @@ export const deletePatientById = (patientId: string) =>
    handleApi<null>(() => 
       axiosInstance.delete(`/patients/${patientId}`)
    )
+
+export const getDoctorById = (doctorId: string) => 
+handleApi<Doctor>(() => 
+   axiosInstance.get(`/doctors/${doctorId}`)
+)
+
+export const deleteDoctorById = (doctorId: string) => 
+handleApi<null>(() => 
+   axiosInstance.delete(`/doctors/${doctorId}`)
+)

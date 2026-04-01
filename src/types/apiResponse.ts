@@ -134,3 +134,7 @@ export interface Appointment{
 export type PatientWithSerial = Patient & {
   serial: number
 }
+
+export type DoctorWithSerial = DoctorProfileType & {
+  serial: number
+}

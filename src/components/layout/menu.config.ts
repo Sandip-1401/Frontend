@@ -2,8 +2,6 @@ import {
   LayoutDashboard,
   User,
   Stethoscope,
-  Users,
-  Dock,
   CalendarClock,
 } from "lucide-react";
 
@@ -26,7 +24,12 @@ export const menuConfig: Record<Role, MenuItem[]> = {
     {
       label: "Patients",
       path: "/admin/patients",
-      icon: LayoutDashboard,
+      icon: User,
+    },
+    {
+      label: "Doctors",
+      path: "/admin/doctors",
+      icon: Stethoscope,
     },
   ],
 

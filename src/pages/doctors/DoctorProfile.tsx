@@ -26,8 +26,8 @@ export const DoctorProfile = () => {
 
    const doctor = data?.doctor
 
-   
-   
+
+
    return (
       <div className="p-4">
          <DynamicBreadcrumb
@@ -44,8 +44,8 @@ export const DoctorProfile = () => {
 
             <div className="max-w-5xl mx-auto p-4 md:p-8 space-y-8 animate-in fade-in duration-500">
 
-         {isLoading && <MyLoader />}
-          {error && <ErrorMessage errorProp={error.message} />}
+               {isLoading && <MyLoader />}
+               {error && <ErrorMessage errorProp={error.message} />}
 
 
                {doctor && (

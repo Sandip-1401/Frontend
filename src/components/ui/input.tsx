@@ -17,3 +17,50 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
 }
 
 export { Input }
+
+// import * as React from "react"
+// import { cn } from "@/lib/utils"
+
+// function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+//   return (
+//     <input
+//       type={type}
+//       data-slot="input"
+//       className={cn(
+//         "h-10 w-full min-w-0 rounded-lg border border-gray-200 bg-white px-3 py-2",
+//         "text-sm text-gray-700 transition-all duration-150 outline-none",
+//         "placeholder:text-gray-400",
+//         "hover:border-cyan-300",
+//         "focus-visible:border-cyan-500 focus-visible:ring-3 focus-visible:ring-cyan-500/20",
+//         "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+//         "aria-invalid:border-red-400 aria-invalid:ring-3 aria-invalid:ring-red-400/20",
+//         // time input specific
+//         type === "time" && [
+//           "[color-scheme:light]",
+//           "cursor-pointer",
+//           "[&::-webkit-calendar-picker-indicator]:opacity-40",
+//           "[&::-webkit-calendar-picker-indicator]:hover:opacity-100",
+//           "[&::-webkit-calendar-picker-indicator]:cursor-pointer",
+//           "[&::-webkit-calendar-picker-indicator]:transition-opacity",
+//           "[&::-webkit-datetime-edit-hour-field]:rounded",
+//           "[&::-webkit-datetime-edit-minute-field]:rounded",
+//           "[&::-webkit-datetime-edit-ampm-field]:rounded",
+//           "[&::-webkit-datetime-edit-hour-field]:px-0.5",
+//           "[&::-webkit-datetime-edit-minute-field]:px-0.5",
+//           "[&::-webkit-datetime-edit-ampm-field]:px-0.5",
+//           "[&::-webkit-datetime-edit-hour-field:focus]:bg-cyan-500",
+//           "[&::-webkit-datetime-edit-minute-field:focus]:bg-cyan-500",
+//           "[&::-webkit-datetime-edit-ampm-field:focus]:bg-cyan-500",
+//           "[&::-webkit-datetime-edit-hour-field:focus]:text-white",
+//           "[&::-webkit-datetime-edit-minute-field:focus]:text-white",
+//           "[&::-webkit-datetime-edit-ampm-field:focus]:text-white",
+//         ],
+//         "dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200",
+//         className
+//       )}
+//       {...props}
+//     />
+//   )
+// }
+
+// export { Input }

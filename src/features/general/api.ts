@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
-import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
+import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -138,11 +138,26 @@ export const deletePatientById = (patientId: string) =>
    )
 
 export const getDoctorById = (doctorId: string) => 
-handleApi<Doctor>(() => 
-   axiosInstance.get(`/doctors/${doctorId}`)
-)
+   handleApi<Doctor>(() => 
+      axiosInstance.get(`/doctors/${doctorId}`)
+   )
 
 export const deleteDoctorById = (doctorId: string) => 
-handleApi<null>(() => 
-   axiosInstance.delete(`/doctors/${doctorId}`)
-)
+   handleApi<null>(() => 
+      axiosInstance.delete(`/doctors/${doctorId}`)
+   )
+
+export const getMySchedules = () => 
+   handleApi<DoctorSchedule[]>(() => 
+      axiosInstance.get(`/schedules/my-schedule`)
+   )
+
+export const createSchedule = (data: DoctorSchedule) => 
+   handleApi<DoctorSchedule>(() => 
+      axiosInstance.post('/schedules', data)
+   )
+
+export const deleteSchedule = (scheduleId: string) => 
+   handleApi(() => 
+      axiosInstance.delete(`/schedules/${scheduleId}`)
+   )

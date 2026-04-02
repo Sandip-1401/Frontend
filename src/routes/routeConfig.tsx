@@ -14,6 +14,7 @@ import AllPatients from "@/pages/admin/AllPatients";
 import ViewPatient from "@/pages/admin/ViewPatient";
 import AllDoctorList from "@/pages/admin/AllDoctorList";
 import ViewDoctor from "@/pages/admin/ViewDoctor";
+import MySchedules from "@/pages/doctor-schedule/MySchedules";
 
 export interface RouteType{
    path: string,
@@ -117,6 +118,11 @@ export const protectedRoute: RouteType[] =  [
    {
       path: '/doctor/appointments/cancelled-appointment/:appointmentId',
       element: <PendingAppointmentPage />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/my-schedules',
+      element: <MySchedules />,
       allowedRole: ["DOCTOR"]
    }
 ]

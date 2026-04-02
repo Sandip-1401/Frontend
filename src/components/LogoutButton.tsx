@@ -37,7 +37,7 @@ const LogoutButton = () => {
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 1 }}
         >
-          <AlertDialogContent className="bg-white rounded-xl p-6 shadow-xl">
+          <AlertDialogContent className="bg-white dark:bg-slate-900 dark:text-gray-50/70 rounded-xl p-6 shadow-xl">
             <AlertDialogHeader>
               <AlertDialogTitle >Are you absolutely sure to Logout?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -46,8 +46,8 @@ const LogoutButton = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="border border-gray-300 hover:bg-gray-100">Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white">Continue</AlertDialogAction>
+              <AlertDialogCancel className="border border-gray-300 hover:bg-gray-100 dark:text-black">Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white ">Continue</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </motion.div>

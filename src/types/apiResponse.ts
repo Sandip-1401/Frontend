@@ -138,3 +138,21 @@ export type PatientWithSerial = Patient & {
 export type DoctorWithSerial = DoctorProfileType & {
   serial: number
 }
+
+export interface DoctorSchedule{
+  schedule_id?: string
+  day_of_week: string,
+  start_time: string,
+  end_time: string,
+  slot_duration_minutes: number,
+  max_patients: number
+  doctor?: Doctor
+}
+// interface FormData {
+//    day_of_week: DayOfWeek
+//    start_time: string
+//    end_time: string
+//    slote_duration: number
+//    max_patient: number
+//    doctor?: Doctor
+// }

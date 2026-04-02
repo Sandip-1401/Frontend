@@ -3,6 +3,7 @@ import {
   User,
   Stethoscope,
   CalendarClock,
+  Calendar,
 } from "lucide-react";
 
 export type Role = "ADMIN" | "DOCTOR" | "PATIENT";
@@ -66,6 +67,11 @@ export const menuConfig: Record<Role, MenuItem[]> = {
         },
       ]
     },
+    {
+      label: "My Schedules",
+      icon: Calendar,
+      path: "/doctor/my-schedules"
+    }
   ],
 
   PATIENT: [

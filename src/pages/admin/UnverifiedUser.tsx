@@ -66,7 +66,7 @@ const UnverifiedUser = () => {
             ]}
          />
          <div>
-            <p className='text-2xl font-semibold mb-5 dark:text-cyan-400 text-gray-700'>All User list</p>
+            <p className='text-2xl font-semibold mb-5 dark:text-cyan-400 text-gray-700'>Unverified User list</p>
          </div>
 
          <div className="grid gird-cols-3 sm:grid sm:grid-cols-12">

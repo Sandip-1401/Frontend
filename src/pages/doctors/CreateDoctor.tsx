@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import {  useState } from "react";
 import { doctorOnboardingStor } from "@/store/doctorOnboarding";
-import { Stethoscope, ArrowRight, AlertTriangleIcon } from "lucide-react";
+import { Stethoscope, ArrowRight, AlertTriangleIcon, LoaderIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { createDoctor, getDepartments } from "@/features/general/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
 
 type DoctorForm = {
   qualification: string;
@@ -242,10 +243,7 @@ const CreateDoctor = () => {
                 >
                   {mutation.isPending ? (
                     <>
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
+                     <Spinner />
                       Creating...
                     </>
                   ) : (
@@ -263,3 +261,14 @@ const CreateDoctor = () => {
 };
 
 export default CreateDoctor;
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}

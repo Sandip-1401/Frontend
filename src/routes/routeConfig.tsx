@@ -15,6 +15,8 @@ import ViewPatient from "@/pages/admin/ViewPatient";
 import AllDoctorList from "@/pages/admin/AllDoctorList";
 import ViewDoctor from "@/pages/admin/ViewDoctor";
 import MySchedules from "@/pages/doctor-schedule/MySchedules";
+import AllUsers from "@/pages/admin/AllUsers";
+import UnverifiedUser from "@/pages/admin/UnverifiedUser";
 
 export interface RouteType{
    path: string,
@@ -47,6 +49,16 @@ export const protectedRoute: RouteType[] =  [
    {
       path: '/admin/doctors/:doctorId',
       element: <ViewDoctor />,
+      allowedRole: ["ADMIN"]
+   },
+   {
+      path: '/admin/allUsers',
+      element: <AllUsers />,
+      allowedRole: ["ADMIN"]
+   },
+   {
+      path: '/admin/unverified-users',
+      element: <UnverifiedUser />,
       allowedRole: ["ADMIN"]
    },
    {

@@ -52,7 +52,6 @@ function Slider({
         />
       </SliderPrimitive.Track>
 
-      {/* Step markers below track */}
       <div className="absolute w-full flex justify-between px-0 top-[calc(50%+8px)]">
         {Array.from({ length: totalSteps + 1 }, (_, i) => (
           <span key={i} className="text-[10px] text-gray-400 font-medium">

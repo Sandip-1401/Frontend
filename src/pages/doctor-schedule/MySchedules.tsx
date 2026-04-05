@@ -178,7 +178,6 @@ const MySchedules = () => {
                            <DialogHeader>
                               <DialogTitle className="sr-only" >Appoint your Schedule</DialogTitle>
                               <DialogDescription>
-                                 {/* Fill data */}
                               </DialogDescription>
                            </DialogHeader>
 

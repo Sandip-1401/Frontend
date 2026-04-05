@@ -31,7 +31,7 @@ function DataTable<T extends Record<string, any>>({
 }: DataTableProps<T>) {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <div className="hidden md:flex flex-col overflow-auto shadow-sm rounded-md border dark:border-gray-600">
+      <div className=" md:flex flex-col overflow-auto shadow-sm rounded-md border dark:border-gray-600">
         <Table>
           <TableHeader className="bg-cyan-400 dark:bg-primary-400 sticky z-10 top-0">
             <TableRow>
@@ -107,7 +107,7 @@ function DataTable<T extends Record<string, any>>({
 
                         <DropdownMenuContent align="end">
                           {onView && (
-                            <DropdownMenuItem className="dark:bg-slate-400 p-2 dark:text-gray-800 flex justify-center" onClick={() => onView(row)}>
+                            <DropdownMenuItem className="dark:bg-slate-400 p-2 dark:text-gray-800 flex " onClick={() => onView(row)}>
                               View
                             </DropdownMenuItem>
                           )}

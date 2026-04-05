@@ -17,7 +17,12 @@ export type User = {
   status: "ACTIVE" | string;
   is_active: boolean;
   is_verified: boolean;
+  created_at: string
 };
+
+export type UserWithSerial = User & {
+  serial: number
+}
 
 export type Address = {
   address_id: string;

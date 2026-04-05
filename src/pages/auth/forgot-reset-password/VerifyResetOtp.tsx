@@ -2,11 +2,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { verifyResetPasswordOtp } from "@/features/auth/api";
-import { ShieldCheck, ArrowRight, KeyRound } from "lucide-react";
+import { ShieldCheck, ArrowRight, KeyRound, LoaderIcon } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type OtpForm = {
   otp: string;
@@ -111,7 +112,6 @@ const VerifyResetOtp = () => {
                 </div>
               )}
 
-              {/* Resend success */}
               {/* {resendMessage && (
                 <div className="rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-600 flex items-center gap-2">
                   {resendMessage}
@@ -126,10 +126,7 @@ const VerifyResetOtp = () => {
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
+                      <Spinner />
                       Verifying...
                     </>
                   ) : (
@@ -166,3 +163,14 @@ const VerifyResetOtp = () => {
 };
 
 export default VerifyResetOtp;
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}

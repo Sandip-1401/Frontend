@@ -48,7 +48,6 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
 
                 return (
                   <div key={i}>
-                    {/* Parent */}
                     <button
                       onClick={() => toggleMenu(item.label)}
                       className={cn(
@@ -76,7 +75,6 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                       )}
                     </button>
 
-                    {/* Children */}
                     {isOpen && !collapsed && (
                       <div className="ml-4 mt-0.5 mb-0.5 space-y-0.5 border-l border-border pl-3">
                         {item.children.map((child, idx) => {

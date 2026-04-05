@@ -1,7 +1,7 @@
 import DataTable from '@/components/data-table/DataTable'
 import DynamicBreadcrumb from '@/components/DynamicBreadcrumb'
 import ErrorMessage from '@/components/ErrorMessage'
-import MyLoader from '@/components/MyLoader'
+// import MyLoader from '@/components/MyLoader'
 import { allPatients } from '@/features/general/api'
 import type { Patient, PatientWithSerial } from '@/types/apiResponse'
 import { useQuery } from '@tanstack/react-query'
@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { ArrowDownUp, ArrowUpDown, Search, XOctagonIcon } from 'lucide-react'
 import { ToggleGroupItem, ToggleGroup } from '@/components/ui/toggle-group'
-import { orderSortButtonClasName, toggleGroupItem } from './AllDoctorList'
+import { orderSortButtonClasName } from './AllDoctorList'
 import { Button } from '@/components/ui/button'
 
 const AllPatients = () => {
@@ -25,7 +25,7 @@ const AllPatients = () => {
 
    const columns = patientHeaderForAdmin;
 
-   const { data, isLoading, error } = useQuery<Patient[]>({
+   const { data, error } = useQuery<Patient[]>({
       queryKey: ["patients", debouncedSearch, gender, sort, order],
       queryFn: async () => {
          const res = await allPatients(debouncedSearch, gender, sort, order);
@@ -77,63 +77,63 @@ const AllPatients = () => {
             <p className='text-2xl font-semibold mb-5 dark:text-cyan-400 text-gray-700'>All Patient list</p>
          </div>
 
-         <div className='flex gap-3'>
-            <div >
+         <div className='sm:grid sm:grid-cols-12 grid gap-2 '>
+            <div className='sm:col-span-4'>
                <InputGroup >
-                  <InputGroupInput placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                  <InputGroupInput placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className='w-full '/>
                   <InputGroupAddon>
                      <Search />
                   </InputGroupAddon>
                </InputGroup>
             </div>
-            <div>
+            <div className='sm:col-span-3 sm:col-start-6'>
                <ToggleGroup
                   type="single"
                   onValueChange={(val) => setGender(val)}
-                  className=" rounded-lg border dark:border-gray-600  overflow-hidden"
+                  className="grid grid-cols-3 w-full rounded-lg border dark:border-gray-600  overflow-hidden"
                >
                   <ToggleGroupItem
                      value="MALE"
-                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
+                     className={`${"col-span-1 px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
                   >
                      Male
                   </ToggleGroupItem>
 
                   <ToggleGroupItem
                      value="FEMALE"
-                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
+                     className={`${"col-span-1 px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
                   >
                      Female
                   </ToggleGroupItem>
                   <ToggleGroupItem
                      value="OTHER"
-                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
+                     className={`${"col-span-1 px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
                   >
                      Other
                   </ToggleGroupItem>
                </ToggleGroup>
             </div>
-            <div className="flex  gap-4">
+            <div className="grid grid-cols-5 w-full gap-3 sm:col-span-3">
                <ToggleGroup
                   type="single"
                   onValueChange={(val) => setSort(val)}
-                  className=" rounded-lg border dark:border-gray-600  overflow-hidden"
+                  className=" rounded-lg border dark:border-gray-600  overflow-hidden col-span-4 grid grid-cols-4 w-full"
                >
                   <ToggleGroupItem
                      value="date_of_birth"
-                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
+                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600 col-span-2`}
                   >
                      DOB
                   </ToggleGroupItem>
 
                   <ToggleGroupItem
                      value="created_at"
-                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600`}
+                     className={`${" px-4 py-1.5 text-sm font-medium data-[state=on]:bg-cyan-400/80 data-[state=on]:text-white data-[state=on]:dark:text-white text-gray-600/80 dark:text-white/60 transition-none"}border-r border-gray-600 col-span-2`}
                   >
                      created_at
                   </ToggleGroupItem>
                </ToggleGroup>
-               <div className="flex text-lg items-center">
+               <div className="flex text-lg items-center col-span-1">
                   {order === "ASC" ?
                      <div className={orderSortButtonClasName}>
                         <ArrowUpDown size={22} onClick={() => setOrder("DESC")} />

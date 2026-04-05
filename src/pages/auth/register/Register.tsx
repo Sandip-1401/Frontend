@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRegisterStore } from "../../../store/registerStore";
-import { User, Mail, Lock, Phone, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { User, Mail, Lock, Phone, ArrowRight, Eye, EyeOff, LoaderIcon } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { registerUser } from "@/features/auth/api";
+import { cn } from "@/lib/utils";
 
 type RegisterFormData = {
   name: string;
@@ -33,7 +34,7 @@ const Register = () => {
       setFormData(data);
       const res = await registerUser(data);
 
-      if(!res.success){
+      if (!res.success) {
         setServerError(res.message)
         return;
       }
@@ -173,7 +174,7 @@ const Register = () => {
                   </p>
                 )}
               </div>
-              
+
               {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
               <Button
                 type="submit"
@@ -181,13 +182,11 @@ const Register = () => {
                 className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold text-sm shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all duration-200 mt-1 disabled:opacity-60"
               >
                 {loading ? (
-                  <>
-                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
-                    Sending OTP...
-                  </>
+                  <div className="flex items-center gap-4">
+                    <Spinner />
+                    Sending otp...
+                  </div>
+                  
                 ) : (
                   <>Send OTP <ArrowRight className="w-4 h-4" /></>
                 )}
@@ -212,3 +211,14 @@ const Register = () => {
 };
 
 export default Register;
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}

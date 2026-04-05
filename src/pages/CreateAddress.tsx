@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { axiosInstance } from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, LoaderIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuthStore } from "@/store/authStore";
+import { cn } from "@/lib/utils";
 
 type AddressForm = {
   address_line_1: string;
@@ -89,7 +90,6 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
         <CardContent className="p-0">
           <div className="bg-white p-8 sm:p-10">
 
-            {/* Header */}
             <div className="flex items-start gap-4 mb-8">
               <div className="w-12 h-12 shrink-0 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center">
                 <MapPin className="w-5 h-5 text-blue-500" />
@@ -105,7 +105,6 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
               className="space-y-4"
             >
 
-              {/* Address Line 1 */}
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700">Address Line 1</label>
                 <Input
@@ -116,7 +115,6 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
                 <FieldError message={errors.address_line_1?.message} />
               </div>
 
-              {/* Address Line 2 */}
               <div className="space-y-1">
                 <label className="text-sm font-medium text-slate-700">
                   Address Line 2{" "}
@@ -129,7 +127,6 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
                 />
               </div>
 
-              {/* City + State */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-slate-700">City</label>
@@ -152,7 +149,6 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
                 </div>
               </div>
 
-              {/* Country + Pincode */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-slate-700">Country</label>
@@ -178,14 +174,12 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
                 </div>
               </div>
 
-              {/* Server Error */}
               {serverError && (
                 <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
                   <span>⚠</span> {serverError}
                 </div>
               )}
 
-              {/* Submit */}
               <div className="pt-2">
                 <Button
                   type="submit"
@@ -194,10 +188,7 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
                 >
                   {loading ? (
                     <>
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
+                     <Spinner />
                       Saving...
                     </>
                   ) : (
@@ -215,3 +206,14 @@ const CreateAddress = ({ role }: { role: "DOCTOR" | "PATIENT" }) => {
 };
 
 export default CreateAddress;
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}

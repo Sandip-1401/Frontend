@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
-import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse } from "@/types/apiResponse";
+import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse, User } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -160,4 +160,37 @@ export const createSchedule = (data: DoctorSchedule) =>
 export const deleteSchedule = (scheduleId: string) => 
    handleApi(() => 
       axiosInstance.delete(`/schedules/${scheduleId}`)
+   )
+
+export const getAllUser = async(search: string, verified: string, sort: string, order: string) => {
+   const res = await handleApi<{
+      pagination: any,
+      data: User[]
+   }>(() => axiosInstance.get(`/admin/all-users?verified=${verified}&sort=${sort}&order=${order}&search=${search}&page=${''}&limit=${''}`))
+   if(!res.success) return res;
+   return {
+      success: true as const,
+      data: res.data.data as User[]
+   }
+}
+
+export const unverifieduser = async (search: string, sort: string, order: string) => {
+   const res = await handleApi<{
+      pagination: any,
+      data: User[]
+   }>(()  => axiosInstance.get(`/admin/unverified-users?sort=${sort}&order=${order}&search=${search}&page=${''}&limit=${''}`))
+
+   if(!res.success){
+      return res
+   }
+
+   return {
+      success: true as const,
+      data: res.data.data as User[]
+   }
+}
+
+export const verifyUser = async (user_id: string) => 
+   handleApi(() => 
+      axiosInstance.patch(`/admin/verify-user/${user_id}`)
    )

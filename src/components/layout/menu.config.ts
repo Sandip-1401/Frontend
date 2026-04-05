@@ -4,6 +4,7 @@ import {
   Stethoscope,
   CalendarClock,
   Calendar,
+  User2,
 } from "lucide-react";
 
 export type Role = "ADMIN" | "DOCTOR" | "PATIENT";
@@ -21,6 +22,16 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       label: "Dashboard",
       path: "/admin",
       icon: LayoutDashboard,
+    },
+    {
+      label: "All Users",
+      path: "/admin/allUsers",
+      icon: User2,
+    },
+    {
+      label: "Unverified Users",
+      path: "/admin/unverified-users",
+      icon: User2,
     },
     {
       label: "Patients",

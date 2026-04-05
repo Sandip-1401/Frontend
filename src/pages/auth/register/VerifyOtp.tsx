@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../../api/axios";
 import { useRegisterStore } from "../../../store/registerStore";
 import { useNavigate } from "react-router-dom";
-import { ShieldCheck, ArrowRight, KeyRound } from "lucide-react";
+import { ShieldCheck, ArrowRight, KeyRound, LoaderIcon } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 type OtpForm = {
   otp: string;
@@ -99,10 +100,7 @@ const VerifyOtp = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
+                    <Spinner />
                     Verifying...
                   </>
                 ) : (
@@ -114,7 +112,7 @@ const VerifyOtp = () => {
             <p className="text-center text-xs text-slate-400 mt-6">
               Didn't receive the OTP?{" "}
               <span
-                onClick={() => navigate("/register")}
+                onClick={() => navigate(-1)}
                 className="text-blue-500 font-semibold hover:underline cursor-pointer"
               >
                 Go back
@@ -129,3 +127,14 @@ const VerifyOtp = () => {
 };
 
 export default VerifyOtp;
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}

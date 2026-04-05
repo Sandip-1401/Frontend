@@ -2,11 +2,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { resetPassword } from "@/features/auth/api";
-import { Lock, Eye, EyeOff, ArrowRight, KeyRound } from "lucide-react";
+import { Lock, Eye, EyeOff, ArrowRight, KeyRound, LoaderIcon } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ResetForm = {
   password: string;
@@ -156,10 +157,7 @@ const ResetPassword = () => {
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
+                      <Spinner />
                       Resetting...
                     </>
                   ) : (
@@ -187,3 +185,14 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}

@@ -83,7 +83,7 @@ const Navbar = ({ onToggle }: NavbarProps) => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: "100%" }}
                   transition={{ duration: 0.3 }}
-                  className="bg-background dark:bg-slate-950 backdrop-blur-2xl h-full dark:border-none dark:shadow-[-5px_-5px_5px_#000111] p-3"
+                  className="bg-background dark:bg-slate-950 backdrop-blur-2xl h-full dark:border-none dark:shadow-[-5px_-5px_5px_#000111] p-3 overflow-y-auto scroll-p-0"
                 >
                   <SheetHeader>
                     <SheetTitle className="text-gray-950 dark:text-cyan-400 text-xl">Notifications</SheetTitle>

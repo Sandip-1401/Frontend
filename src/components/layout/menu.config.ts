@@ -43,6 +43,11 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       path: "/admin/doctors",
       icon: Stethoscope,
     },
+    {
+      label: "Pending Doctors",
+      path: "/admin/pending-doctors",
+      icon: Stethoscope,
+    },
   ],
 
   DOCTOR: [

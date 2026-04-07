@@ -194,3 +194,22 @@ export const verifyUser = async (user_id: string) =>
    handleApi(() => 
       axiosInstance.patch(`/admin/verify-user/${user_id}`)
    )
+
+export const pendingDoctors = async () => {
+   const res = await handleApi<{
+      pegination: any
+      data: Doctor[]
+   }>(() => axiosInstance.get('/admin/pending-doctors'))
+   if(!res.success){
+      return res
+   }
+   return {
+      success: true as const,
+      data: res.data.data as Doctor[]
+   }
+}
+
+export const activeDoctor = async (doctor_id: string) => 
+   handleApi(() => 
+      axiosInstance.patch(`/admin/active-doctor/${doctor_id}`)
+   )

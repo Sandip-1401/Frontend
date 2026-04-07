@@ -96,7 +96,7 @@ export type Doctor = {
   qualification: string,
   experience_years: number,
   consultation_fee: string,
-  is_available: true,
+  is_available: Boolean,
   status: string,
   user: User,
   department: Department,
@@ -140,7 +140,7 @@ export type PatientWithSerial = Patient & {
   serial: number
 }
 
-export type DoctorWithSerial = DoctorProfileType & {
+export type DoctorWithSerial = Doctor & {
   serial: number
 }
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Switch } from './ui/switch'
 import type { DoctorWithSerial } from '@/types/apiResponse'
 import { useQueryClient } from '@tanstack/react-query'

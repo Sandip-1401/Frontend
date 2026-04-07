@@ -47,7 +47,7 @@ const PendingDoctors = () => {
           columns={columns}
           idKey="serial"
           />
-          {formatedData.length === 0 ? <p className="flex justify-center items-center my-10">No doctors are pending</p> : <MyLoader/>}
+          {formatedData.length === 0 ? <p className="flex justify-center items-center my-10">No doctors are pending</p> : isLoading ?  <MyLoader/> : ""}
           {error && <ErrorMessage errorProp={(error as Error).message} />}
       </div>
     )

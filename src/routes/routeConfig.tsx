@@ -18,6 +18,8 @@ import MySchedules from "@/pages/doctor-schedule/MySchedules";
 import AllUsers from "@/pages/admin/AllUsers";
 import UnverifiedUser from "@/pages/admin/UnverifiedUser";
 import PendingDoctors from "@/pages/admin/PendingDoctors";
+import MyAppointments from "@/pages/patients/MyAppointments";
+import ShowAppointment from "@/pages/patients/ShowAppointment";
 
 export interface RouteType{
    path: string,
@@ -87,7 +89,16 @@ export const protectedRoute: RouteType[] =  [
       element: <ShowDoctorSchedule />,
       allowedRole: ["PATIENT"]
    },
-
+   {
+      path: '/patient/my-appointment',
+      element: <MyAppointments />,
+      allowedRole: ["PATIENT"]
+   },
+   {
+      path: '/patient/appointment/:appointmentId',
+      element: <ShowAppointment />,
+      allowedRole: ["PATIENT"]
+   },
    {
       path: '/doctor',
       element: <DoctorDashboard />,

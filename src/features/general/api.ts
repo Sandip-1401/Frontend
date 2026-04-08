@@ -213,3 +213,8 @@ export const activeDoctor = async (doctor_id: string) =>
    handleApi(() => 
       axiosInstance.patch(`/admin/active-doctor/${doctor_id}`)
    )
+
+export const myappointment = async () => 
+   handleApi<AppointmentForDoctor[]>(() => 
+      axiosInstance.get('/appointments/myappointment')
+   )

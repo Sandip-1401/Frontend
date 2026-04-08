@@ -105,6 +105,11 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       label: "Book Appointment",
       path: "/patient/all-doctors",
       icon: CalendarClock
+    },
+    {
+      label: "My Appointments",
+      path: "/patient/my-appointment",
+      icon: CalendarClock
     }
   ],
 };

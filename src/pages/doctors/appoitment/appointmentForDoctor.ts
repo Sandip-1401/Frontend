@@ -27,6 +27,7 @@ export interface Doctor {
    consultation_fee: string,
    is_available: true,
    status: string,
+   user: User
 }
 
 export interface AppointmentForDoctor {

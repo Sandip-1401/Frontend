@@ -9,7 +9,7 @@ import PendingAppointment from "@/pages/doctors/appoitment/PendingAppointment";
 import ApprovedAppointment from "@/pages/doctors/appoitment/ApprovedAppointment";
 import CompletedAppointment from "@/pages/doctors/appoitment/CompletedAppointment";
 import CancelledAppointment from "@/pages/doctors/appoitment/CancelledAppointment";
-import PendingAppointmentPage from "@/pages/doctors/appoitment/ShowAppointmentPage";
+import CommonAppointmentPage from "@/pages/doctors/appoitment/ShowAppointmentPage";
 import AllPatients from "@/pages/admin/AllPatients";
 import ViewPatient from "@/pages/admin/ViewPatient";
 import AllDoctorList from "@/pages/admin/AllDoctorList";
@@ -20,6 +20,9 @@ import UnverifiedUser from "@/pages/admin/UnverifiedUser";
 import PendingDoctors from "@/pages/admin/PendingDoctors";
 import MyAppointments from "@/pages/patients/MyAppointments";
 import ShowAppointment from "@/pages/patients/ShowAppointment";
+import CreateMedicalRecord from "@/pages/medical-records/CreateMedicalRecord";
+import MyMedicalRecords from "@/pages/medical-records/doctor/MyMedicalRecords";
+import ViewMedicalRecord from "@/pages/medical-records/doctor/ViewMedicalRecord";
 
 export interface RouteType{
    path: string,
@@ -131,27 +134,42 @@ export const protectedRoute: RouteType[] =  [
    },
    {
       path: '/doctor/appointments/pending-appointment/:appointmentId',
-      element: <PendingAppointmentPage />,
+      element: <CommonAppointmentPage />,
       allowedRole: ["DOCTOR"]
    },
    {
       path: '/doctor/appointments/approved-appointment/:appointmentId',
-      element: <PendingAppointmentPage />,
+      element: <CommonAppointmentPage />,
       allowedRole: ["DOCTOR"]
    },
    {
       path: '/doctor/appointments/completed-appointment/:appointmentId',
-      element: <PendingAppointmentPage />,
+      element: <CommonAppointmentPage />,
       allowedRole: ["DOCTOR"]
    },
    {
       path: '/doctor/appointments/cancelled-appointment/:appointmentId',
-      element: <PendingAppointmentPage />,
+      element: <CommonAppointmentPage />,
       allowedRole: ["DOCTOR"]
    },
    {
       path: '/doctor/my-schedules',
       element: <MySchedules />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: `/doctor/appointments/approved-appointment/:appointmentId/medical-record`,
+      element: <CreateMedicalRecord />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/my-medicalRecords',
+      element: <MyMedicalRecords />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/my-medicalRecords/:medical_record_id',
+      element: <ViewMedicalRecord />,
       allowedRole: ["DOCTOR"]
    }
 ]

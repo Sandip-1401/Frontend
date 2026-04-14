@@ -9,17 +9,17 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { useParams } from 'react-router-dom'
-import { Calendar, CalendarClock, Check, CheckCircle, Clock, Heart, Pen, Phone, Ruler, Trash2Icon, User2, Weight, X } from 'lucide-react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Calendar, CalendarClock, Check, CheckCircle, Clock, Heart, Pen, PencilIcon, Phone, Ruler, Trash2Icon, User2, Weight, X } from 'lucide-react'
 import ErrorMessage from '@/components/ErrorMessage'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { toast } from 'sonner'
 
+const CommonAppointmentPage = () => {
 
-
-const PendingAppointmentPage = () => {
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient()
 
@@ -210,6 +210,40 @@ const PendingAppointmentPage = () => {
             </Card>
           </div>
         )}
+        {data?.status.status_name === "APPROVED" && (
+          <div className='mx-3'>
+            <Card className="dark:border dark:border-gray-700 overflow-hidden sm:flex sm:flex-row sm:justify-between pb-0 sm:pb-4">
+              <CardHeader className="flex flex-row items-center gap-4 px-5 py-0
+                 border-gray-100">
+                <div className="w-11 h-11 shrink-0 flex items-center justify-center 
+                bg-cyan-500 rounded-xl">
+                  <CalendarClock className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-xs font-semibold tracking-widest text-gray-400 
+                    dark:text-gray-500 uppercase">
+                    Appointment Status
+                  </p>
+                  <Badge className="w-fit px-3 py-0.5 text-xs font-semibold 
+                    bg-orange-100 text-orange-700 border border-orange-300 
+                    dark:bg-orange-950 dark:text-orange-300 dark:border-orange-700">
+                    {data.status.status_name}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <div className='flex items-center justify-center m-5'>
+                <Button className="gap-2 bg-cyan-500 hover:bg-cyan-600 
+                active:bg-cyan-500 border border-cyan-600 
+                text-white font-semibold text-sm px-5 duration-150 shadow-sm"
+                onClick={() => navigate(`/doctor/appointments/approved-appointment/${data.appointment_id}/medical-record`)}
+                >
+                  <PencilIcon/> 
+                  Create Medical Record
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
       </div>
 
       <div className='sm:px-5 mt-5'>
@@ -318,4 +352,4 @@ const PendingAppointmentPage = () => {
   )
 }
 
-export default PendingAppointmentPage
+export default CommonAppointmentPage

@@ -187,7 +187,7 @@ const MySchedules = () => {
                                     <FormField
                                        control={form.control}
                                        name="day_of_week"
-                                       render={({ field }) => (
+                                       render={({ field }) => (   
                                           <>
                                              <Label htmlFor="day_of_week">Choose Day of week</Label>
                                              <Select value={field.value} onValueChange={field.onChange}>

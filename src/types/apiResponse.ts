@@ -108,7 +108,7 @@ export type DoctorProfileResponse = {
   doctor: Doctor;
 };
 
-export interface NotificationData{
+export interface NotificationData {
   notification_id: string
   receiver_id: string
   sender_id: string
@@ -120,12 +120,12 @@ export interface NotificationData{
   is_read: boolean
 }
 
-export interface AppointmentStatus{
+export interface AppointmentStatus {
   appointment_status_id: string,
   status_name: "APPROVED" | "CANCELLED" | "BOOKED" | "COMPLETED"
 }
 
-export interface Appointment{
+export interface Appointment {
   appointment_id: string
   appointment_date: string
   appointment_time: string
@@ -144,7 +144,7 @@ export type DoctorWithSerial = Doctor & {
   serial: number
 }
 
-export interface DoctorSchedule{
+export interface DoctorSchedule {
   schedule_id?: string
   day_of_week: string,
   start_time: string,
@@ -161,3 +161,21 @@ export interface DoctorSchedule{
 //    max_patient: number
 //    doctor?: Doctor
 // }
+
+export interface MedicalRecordCard {
+  medical_record_id: string;
+  diagnosis: string;
+  notes: string;
+  appointment: {
+    appointment_date: string;
+    appointment_time: string;
+    reason: string;
+  };
+  patient: {
+    user: {
+      name: string;
+    };
+    gender: string;
+    blood_group: string;
+  };
+}

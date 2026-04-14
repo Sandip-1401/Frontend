@@ -1,7 +1,9 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
-import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse, User } from "@/types/apiResponse";
+import type { MedicalFormDataForSend } from "@/pages/medical-records/CreateMedicalRecord";
+import type { MedicalRecord } from "@/pages/medical-records/doctor/ViewMedicalRecord";
+import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, MedicalRecordCard, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse, User } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -217,4 +219,19 @@ export const activeDoctor = async (doctor_id: string) =>
 export const myappointment = async () => 
    handleApi<AppointmentForDoctor[]>(() => 
       axiosInstance.get('/appointments/myappointment')
+   )
+
+export const createMedicalRecord = (data: MedicalFormDataForSend) => 
+   handleApi<MedicalFormDataForSend>(() => 
+      axiosInstance.post(`/medical-records`, data)
+   )
+
+export const getMymedicalRecords = () => 
+   handleApi<MedicalRecordCard[]>(() => 
+      axiosInstance.get('/medical-records/my-records')
+   )
+
+export const medicalRecordById = (medical_record_id: string) => 
+   handleApi<MedicalRecord>(() => 
+      axiosInstance.get(`/medical-records/${medical_record_id}`)
    )

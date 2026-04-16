@@ -28,7 +28,7 @@ const MyMedicalRecords = () => {
   console.log(data);
 
   return (
-    <div className='p-6'>
+    <div className='p-4'>
       <DynamicBreadcrumb
         homeHref={"/doctor"}
         items={[

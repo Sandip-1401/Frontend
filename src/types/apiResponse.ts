@@ -179,3 +179,86 @@ export interface MedicalRecordCard {
     blood_group: string;
   };
 }
+
+export interface PrescriptionOfDoctor {
+  prescription_id: string,
+  prescribed_date: string,
+  patient: {
+    user: {
+      name: string;
+      email: string
+    };
+    gender: string;
+    blood_group: string;
+  },
+  medical_record: {
+    record_date: string
+  }
+}
+
+export type PrescriptionsWithSerial = PrescriptionOfDoctor & {
+  serial: number
+}
+
+
+export interface UserP {
+  user_id: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  status: string;
+  is_active: boolean;
+  is_verified: boolean;
+}
+
+export interface MedicineP {
+  prescription_medicine_id: string;
+  medicine_name: string;
+  dosage: string;
+  frequency: string; // e.g., "1-1-1"
+  duration_days: number;
+  unit_price: string;
+}
+
+export interface DoctorP {
+  doctor_id: string;
+  qualification: string;
+  experience_years: number;
+  consultation_fee: string;
+  user: User;
+}
+
+export interface PatientP {
+  patient_id: string;
+  blood_group: string;
+  date_of_birth: string;
+  gender: string;
+  height: string;
+  weight: string;
+  user: User;
+}
+
+export interface AppointmentP {
+  appointment_id: string;
+  appointment_date: string;
+  appointment_time: string;
+  reason: string;
+}
+
+export interface MedicalRecordP {
+  medical_record_id: string;
+  diagnosis: string;
+  notes: string;
+  record_date: string;
+  appointment: AppointmentP;
+}
+
+export interface PrescriptionData {
+  prescription_id: string;
+  prescribed_date: string;
+  notes: string;
+  medicines: MedicineP[];
+  doctor: DoctorP;
+  patient: PatientP;
+  medical_record: MedicalRecordP;
+}

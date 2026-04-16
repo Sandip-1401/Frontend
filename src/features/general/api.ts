@@ -3,7 +3,8 @@ import { handleApi } from "@/lib/apiHandler";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
 import type { MedicalFormDataForSend } from "@/pages/medical-records/CreateMedicalRecord";
 import type { MedicalRecord } from "@/pages/medical-records/doctor/ViewMedicalRecord";
-import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, MedicalRecordCard, NotificationData, Patient, PatientData, PatientProfileResponse, ScheduleResponse, User } from "@/types/apiResponse";
+import type { CreatePrescriptionForm } from "@/pages/prescription/CreatePrescription";
+import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, MedicalRecordCard, NotificationData, Patient, PatientData, PatientProfileResponse, PrescriptionData, PrescriptionOfDoctor, ScheduleResponse, User } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -234,4 +235,24 @@ export const getMymedicalRecords = () =>
 export const medicalRecordById = (medical_record_id: string) => 
    handleApi<MedicalRecord>(() => 
       axiosInstance.get(`/medical-records/${medical_record_id}`)
+   )
+
+export const createPrescription = (data: CreatePrescriptionForm) => 
+   handleApi<CreatePrescriptionForm>(() => 
+      axiosInstance.post(`/prescriptions`, data)
+   )
+
+export const getMyPrescription = () => 
+   handleApi<PrescriptionOfDoctor[]>(() => 
+      axiosInstance.get('/prescriptions/my-prescription')
+   )
+
+export const prescriptionById = (prescription_id: string) => 
+   handleApi<PrescriptionData>(() => 
+      axiosInstance.get(`/prescriptions/${prescription_id}`)
+   )
+
+export const generateBill = (prescription_id: string) => 
+   handleApi(() => 
+      axiosInstance.post(`/billing/generate/${prescription_id}`)
    )

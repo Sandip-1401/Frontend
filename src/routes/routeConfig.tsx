@@ -23,6 +23,9 @@ import ShowAppointment from "@/pages/patients/ShowAppointment";
 import CreateMedicalRecord from "@/pages/medical-records/CreateMedicalRecord";
 import MyMedicalRecords from "@/pages/medical-records/doctor/MyMedicalRecords";
 import ViewMedicalRecord from "@/pages/medical-records/doctor/ViewMedicalRecord";
+import CreatePrescription from "@/pages/prescription/CreatePrescription";
+import MyPrescription from "@/pages/prescription/doctor/MyPrescription";
+import ViewPrescription from "@/pages/prescription/doctor/ViewPrescription";
 
 export interface RouteType{
    path: string,
@@ -170,6 +173,21 @@ export const protectedRoute: RouteType[] =  [
    {
       path: '/doctor/my-medicalRecords/:medical_record_id',
       element: <ViewMedicalRecord />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/my-medicalRecords/:medical_record_id/prescription',
+      element: <CreatePrescription />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/my-prescriptions',
+      element: <MyPrescription />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/my-prescriptions/:prescription_id',
+      element: <ViewPrescription />,
       allowedRole: ["DOCTOR"]
    }
 ]

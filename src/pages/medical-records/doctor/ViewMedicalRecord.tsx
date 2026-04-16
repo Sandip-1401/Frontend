@@ -12,11 +12,11 @@ import {
    Scale,
    Ruler,
    HeartPulse,
-   Loader2
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { medicalRecordById } from "@/features/general/api";
+import MyLoader from "@/components/MyLoader";
 
 interface User {
   name: string;
@@ -67,7 +67,7 @@ const ViewMedicalRecord = () => {
    if (isLoading) {
       return (
          <div className="h-screen flex items-center justify-center bg-white dark:bg-slate-950">
-            <Loader2 className="h-10 w-10 animate-spin text-cyan-500" />
+           <MyLoader />
          </div>
       );
    }
@@ -79,7 +79,7 @@ const ViewMedicalRecord = () => {
    return (
       <div className="min-h-screen p-4 md:p-8 space-y-6 animate-in fade-in duration-700 max-w-6xl mx-auto dark:bg-slate-950">
 
-         <div className="space-y-2">
+         <div className="">
             <DynamicBreadcrumb
                homeHref={"/doctor"}
                items={[
@@ -218,7 +218,7 @@ const ViewMedicalRecord = () => {
                            <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Required Action</p>
                         </div>
                         <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl shadow-lg shadow-cyan-500/20 h-14 font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.03] active:scale-95"
-                           onClick={() => navigate(`doctor/my-medicalRecords/${medical_record_id}/prescription`)}
+                           onClick={() => navigate(`/doctor/my-medicalRecords/${medical_record_id}/prescription`)}
                         >
                            Generate Now
                         </Button>

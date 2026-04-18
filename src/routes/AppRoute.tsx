@@ -13,6 +13,7 @@ import ForgotPassword from '@/pages/auth/forgot-reset-password/ForgotPassword';
 import VerifyResetOtp from '@/pages/auth/forgot-reset-password/VerifyResetOtp';
 import ResetPassword from '@/pages/auth/forgot-reset-password/ReserPassword';
 import AppLayout from '@/components/layout/AppLayout';
+import LandingPage from '@/pages/LandingPage';
 
 const renderRoutes = (
    routes: RouteType[], 
@@ -49,7 +50,7 @@ const AppRoute = () => {
    return (
       <BrowserRouter>
          <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/register" element={<RegisterFlow />}/>

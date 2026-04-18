@@ -53,6 +53,8 @@ const ViewPrescription = () => {
       onError: (err) => toast.error(err.message)
    });
 
+   console.log(data?.medical_record.appointment.appointment_id)
+
    if (isLoading) {
       return (
          <div className="h-screen flex items-center justify-center bg-white dark:bg-slate-950">
@@ -132,7 +134,7 @@ const ViewPrescription = () => {
                      <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-1 italic">
                         ID: {data.prescription_id.split('-')[0]}
                      </p>
-
+                     
                      <div className="flex flex-wrap justify-center gap-2 mt-6">
                         <Badge variant="secondary" className="rounded-full px-4 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-black uppercase tracking-tighter">
                            {patient.gender}

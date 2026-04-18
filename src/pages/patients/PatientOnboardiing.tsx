@@ -1,7 +1,7 @@
 
 import { usePatientOnboardingStore } from '../../store/patientOnboardingStore'
 import CreatePatient from './CreatePatient';
-import CreateAddress from '../CreateAddress';
+import CreateAddress from '../comman/CreateAddress';
 
 const PatientOnboardiing = () => {
 

@@ -1,6 +1,6 @@
 import { doctorOnboardingStor } from '@/store/doctorOnboarding'
 import CreateDoctor from './CreateDoctor';
-import CreateAddress from '../CreateAddress';
+import CreateAddress from '../comman/CreateAddress';
 
 const DoctorOnboarding = () => {
 

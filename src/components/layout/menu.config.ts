@@ -7,6 +7,7 @@ import {
   User2,
   Dock,
   LucideHospital,
+  DollarSignIcon,
 } from "lucide-react";
 
 export type Role = "ADMIN" | "DOCTOR" | "PATIENT";
@@ -99,6 +100,11 @@ export const menuConfig: Record<Role, MenuItem[]> = {
       label: "Prescriptions",
       icon: LucideHospital,
       path: "/doctor/my-prescriptions"
+    },
+    {
+      label: "Bills",
+      icon: DollarSignIcon,
+      path: '/doctor/bills'
     }
   ],
 

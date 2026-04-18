@@ -40,15 +40,15 @@ const ViewPrescription = () => {
       mutationFn: generateBill,
       onSuccess: () => {
          toast.success("Bill generated successfully!", {
-                     duration: 3000,
-                     description: "Your Bill has been created successfully.",
-                     style: {
-                        background: "#22c55e",
-                        color: "white",
-                        borderRadius: "10px",
-                        padding: "12px",
-                     },
-                  });
+            duration: 3000,
+            description: "Your Bill has been created successfully.",
+            style: {
+               background: "#22c55e",
+               color: "white",
+               borderRadius: "10px",
+               padding: "12px",
+            },
+         });
       },
       onError: (err) => toast.error(err.message)
    });
@@ -134,7 +134,7 @@ const ViewPrescription = () => {
                      <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-1 italic">
                         ID: {data.prescription_id.split('-')[0]}
                      </p>
-                     
+
                      <div className="flex flex-wrap justify-center gap-2 mt-6">
                         <Badge variant="secondary" className="rounded-full px-4 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-black uppercase tracking-tighter">
                            {patient.gender}

@@ -26,6 +26,8 @@ import ViewMedicalRecord from "@/pages/medical-records/doctor/ViewMedicalRecord"
 import CreatePrescription from "@/pages/prescription/CreatePrescription";
 import MyPrescription from "@/pages/prescription/doctor/MyPrescription";
 import ViewPrescription from "@/pages/prescription/doctor/ViewPrescription";
+import MyBillsList from "@/pages/bills/doctor/MyBillsList";
+import ViewBill from "@/pages/bills/doctor/ViewBill";
 
 export interface RouteType{
    path: string,
@@ -188,6 +190,16 @@ export const protectedRoute: RouteType[] =  [
    {
       path: '/doctor/my-prescriptions/:prescription_id',
       element: <ViewPrescription />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/bills',
+      element: <MyBillsList />,
+      allowedRole: ["DOCTOR"]
+   },
+   {
+      path: '/doctor/bills/:appointment_id',
+      element: <ViewBill />,
       allowedRole: ["DOCTOR"]
    }
 ]

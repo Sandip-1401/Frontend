@@ -262,3 +262,38 @@ export interface PrescriptionData {
   patient: PatientP;
   medical_record: MedicalRecordP;
 }
+
+export interface BillOfDoctor {
+  bill_id: string
+  bill_number: string
+  bill_date: string
+  net_amount: string
+  status: string
+  appointment: {
+    appointment_id: string
+  }
+  patient: {
+    user: {
+      name: string
+      email: string
+    }
+  }
+}
+
+export type BillWithSerial = BillOfDoctor & {
+  serial: number
+}
+
+export interface Item{
+  bill_item_id: string
+  item_type: string
+  quantity: number
+  unit_price: string
+  amount: string
+}
+export interface Bill extends BillOfDoctor{
+  total_amount: string
+  discount_amount: string
+  items: Item[]
+  patient: PatientP
+}

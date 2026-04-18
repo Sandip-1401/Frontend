@@ -4,7 +4,7 @@ import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmen
 import type { MedicalFormDataForSend } from "@/pages/medical-records/CreateMedicalRecord";
 import type { MedicalRecord } from "@/pages/medical-records/doctor/ViewMedicalRecord";
 import type { CreatePrescriptionForm } from "@/pages/prescription/CreatePrescription";
-import type { Appointment, AppointmentCreate, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, MedicalRecordCard, NotificationData, Patient, PatientData, PatientProfileResponse, PrescriptionData, PrescriptionOfDoctor, ScheduleResponse, User } from "@/types/apiResponse";
+import type { Appointment, AppointmentCreate, Bill, BillWithSerial, Department, Doctor, DoctorData, DoctorDataType, DoctorProfileResponse, DoctorSchedule, MedicalRecordCard, NotificationData, Patient, PatientData, PatientProfileResponse, PrescriptionData, PrescriptionOfDoctor, ScheduleResponse, User } from "@/types/apiResponse";
 
 export const createPatient = (data: any) => 
    handleApi<PatientData>(() => 
@@ -255,4 +255,23 @@ export const prescriptionById = (prescription_id: string) =>
 export const generateBill = (prescription_id: string) => 
    handleApi(() => 
       axiosInstance.post(`/billing/generate/${prescription_id}`)
+   )
+
+export const myBills = () => 
+   handleApi<BillWithSerial[]>(() => 
+      axiosInstance.get(`/billing/my-bills`)
+   )
+
+export const getBillByAppointment = (appointment_id: string) =>
+   handleApi<Bill>(() => 
+      axiosInstance.get(`billing/appointment/${appointment_id}`)
+   )
+
+export const generateQR = (bill_id: string) =>
+   handleApi<{
+      billId: string
+      amount: string
+      qr: string
+   }>(() => 
+      axiosInstance.get(`/payments/qr/${bill_id}`)
    )

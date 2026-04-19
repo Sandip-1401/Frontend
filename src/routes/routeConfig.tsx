@@ -28,6 +28,8 @@ import MyPrescription from "@/pages/prescription/doctor/MyPrescription";
 import ViewPrescription from "@/pages/prescription/doctor/ViewPrescription";
 import MyBillsList from "@/pages/bills/doctor/MyBillsList";
 import ViewBill from "@/pages/bills/doctor/ViewBill";
+import PatientBillList from "@/pages/bills/patient/patientBill";
+import PatientViewBill from "@/pages/bills/patient/PatientViewBill";
 
 export interface RouteType{
    path: string,
@@ -105,6 +107,16 @@ export const protectedRoute: RouteType[] =  [
    {
       path: '/patient/appointment/:appointmentId',
       element: <ShowAppointment />,
+      allowedRole: ["PATIENT"]
+   },
+   {
+      path: '/patient/bills',
+      element: <PatientBillList />,
+      allowedRole: ["PATIENT"]
+   },
+   {
+      path: '/patient/bills/:appointment_id',
+      element: <PatientViewBill />,
       allowedRole: ["PATIENT"]
    },
    {

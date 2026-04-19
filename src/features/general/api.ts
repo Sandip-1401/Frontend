@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/api/axios";
 import { handleApi } from "@/lib/apiHandler";
+import type { PayBill } from "@/pages/bills/patient/PatientViewBill";
 import type { AppointmentForDoctor } from "@/pages/doctors/appoitment/appointmentForDoctor";
 import type { MedicalFormDataForSend } from "@/pages/medical-records/CreateMedicalRecord";
 import type { MedicalRecord } from "@/pages/medical-records/doctor/ViewMedicalRecord";
@@ -274,4 +275,9 @@ export const generateQR = (bill_id: string) =>
       qr: string
    }>(() => 
       axiosInstance.get(`/payments/qr/${bill_id}`)
+   )
+
+export const payBill = (bill_id: string, data: PayBill) =>
+   handleApi(() => 
+      axiosInstance.post(`/payments/pay/${bill_id}`, data)
    )

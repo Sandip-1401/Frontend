@@ -271,6 +271,7 @@ export interface BillOfDoctor {
   status: string
   appointment: {
     appointment_id: string
+    doctor: DoctorP
   }
   patient: {
     user: {
